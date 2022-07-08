@@ -5,7 +5,7 @@
     <parent>
         <artifactId>aliyun-service</artifactId>
         <groupId>com.wfr.springboot</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,9 +13,20 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.wfr.springboot</groupId>
+            <artifactId>environment</artifactId>
+            <version>${base.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.aliyun.openservices</groupId>
             <artifactId>aliyun-log</artifactId>
-            <version>0.6.64</version>
+            <version>${aliyun-log.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.openservices</groupId>
+            <artifactId>aliyun-log-producer</artifactId>
+            <version>${aliyun-log-producer.version}</version>
         </dependency>
     </dependencies>
 
