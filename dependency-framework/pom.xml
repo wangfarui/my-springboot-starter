@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springboot-starter</artifactId>
+        <groupId>com.wfr.springboot</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dependency-framework</artifactId>
+    <modules>
+        <module>dependency-parent</module>
+        <module>framework-base</module>
+        <module>web-starter</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <properties>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- base -->
+            <dependency>
+                <groupId>com.wfr.springboot</groupId>
+                <artifactId>environment</artifactId>
+                <version>${base.version}</version>
+            </dependency>
+
+            <!-- aliyun-service -->
+            <dependency>
+                <groupId>com.wfr.springboot</groupId>
+                <artifactId>sls-log</artifactId>
+                <version>${aliyun.service.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

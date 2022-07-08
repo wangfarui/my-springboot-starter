@@ -10,16 +10,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>aliyun-service</artifactId>
-    <modules>
-        <module>sls-log</module>
-    </modules>
+    <artifactId>base</artifactId>
 
     <packaging>pom</packaging>
 
-    <properties>
-        <aliyun-log-producer.version>0.3.10</aliyun-log-producer.version>
-        <aliyun-log.version>0.6.70</aliyun-log.version>
-    </properties>
+    <modules>
+        <module>environment</module>
+    </modules>
 
 </project>

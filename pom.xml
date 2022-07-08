@@ -2,20 +2,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <version>2.2.2.RELEASE</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.wfr.springboot</groupId>
-    <artifactId>springboot-start</artifactId>
+    <artifactId>springboot-starter</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+
     <modules>
+        <module>dependency-framework</module>
+        <module>base</module>
         <module>aliyun-service</module>
     </modules>
+
     <packaging>pom</packaging>
 
     <properties>
+        <base.version>1.0.0-SNAPSHOT</base.version>
+        <aliyun.service.version>1.0.0-SNAPSHOT</aliyun.service.version>
+        <dependency.framework.version>1.0.0-SNAPSHOT</dependency.framework.version>
+
+        <java.version>1.8</java.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <java.version>1.8</java.version>
+        <!-- 编译编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <spring.version>5.2.2.RELEASE</spring.version>
         <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
         <lombok.version>1.18.22</lombok.version>
@@ -68,4 +84,28 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>
