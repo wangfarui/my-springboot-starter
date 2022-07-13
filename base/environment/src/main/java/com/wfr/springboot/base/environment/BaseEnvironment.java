@@ -22,6 +22,12 @@ public abstract class BaseEnvironment {
      */
     public static String serverIp;
 
+    /**
+     * 服务名称
+     * <p>对应${spring.application.name}
+     */
+    public static String serverName;
+
     public static void setApplicationContext(ConfigurableApplicationContext applicationContext) {
         BaseEnvironment.applicationContext = applicationContext;
     }
@@ -40,6 +46,11 @@ public abstract class BaseEnvironment {
         try {
             InetAddress localHost = InetAddress.getLocalHost();
             BaseEnvironment.serverIp = localHost.getHostAddress();
+
+            String applicationName = environment.getProperty("spring.application.name");
+            if (applicationName != null) {
+                BaseEnvironment.serverName = applicationName;
+            }
         } catch (UnknownHostException e) {
             BaseEnvironment.serverIp = "localhost";
             System.err.println("无法获取本地Host");

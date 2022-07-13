@@ -1,6 +1,7 @@
 package com.wfr.springboot.base.log.context;
 
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class LogData {
         return new LogData(logLever);
     }
 
-    public LogData setLogLever(LogLever logLever) {
+    public LogData logLever(LogLever logLever) {
         this.logLever = logLever;
         return this;
     }
@@ -71,8 +72,11 @@ public class LogData {
         return this.logLever;
     }
 
-    public void setLogContents(Map<String, Object> logContents) {
-        this.logContents = logContents;
+    public LogData addLogContents(Map<String, Object> logContents) {
+        if (!CollectionUtils.isEmpty(logContents)) {
+            this.logContents.putAll(logContents);
+        }
+        return this;
     }
 
     public Map<String, Object> getLogContents() {

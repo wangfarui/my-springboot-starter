@@ -55,7 +55,7 @@ public class SlsLogProducerService extends AbstractLogService implements Initial
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (producer == null) {
+        if (this.producer == null) {
             ProducerConfig producerConfig = new ProducerConfig();
             fillProducerConfig(producerConfig);
 
@@ -68,8 +68,9 @@ public class SlsLogProducerService extends AbstractLogService implements Initial
 
     @Override
     public void destroy() throws Exception {
-        if (producer != null) {
-            producer.close();
+        if (this.producer != null) {
+            this.producer.close();
+            this.producer = null;
         }
     }
 
@@ -80,11 +81,11 @@ public class SlsLogProducerService extends AbstractLogService implements Initial
         try {
             if (logData instanceof SlsLogData) {
                 SlsLogData slsLogData = (SlsLogData) logData;
-                producer.send(this.project, this.logStore, slsLogData.getTopic(), slsLogData.getSource(), logItems);
+                this.producer.send(this.project, this.logStore, slsLogData.getTopic(), slsLogData.getSource(), logItems);
             } else {
-                producer.send(this.project, this.logStore, logItems);
+                this.producer.send(this.project, this.logStore, logItems);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOGGER.error("Sls log sending exception", e);
         }
     }

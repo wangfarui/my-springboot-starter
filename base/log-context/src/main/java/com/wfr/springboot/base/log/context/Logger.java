@@ -78,7 +78,7 @@ public abstract class Logger {
     private static <T extends LogData> T generateLogDataInstance(Class<T> clazz, LogLever logLever) {
         try {
             T t = clazz.newInstance();
-            t.setLogLever(logLever);
+            t.logLever(logLever);
             return t;
         } catch (Exception e) {
             throw new LogContextException("LogData Class 实例化异常", e);

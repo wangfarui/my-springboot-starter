@@ -1,9 +1,11 @@
 package com.wfr.springboot.aliyun.service.sls.log.properties;
 
 import com.aliyun.openservices.aliyun.log.producer.ProjectConfig;
-import org.springframework.beans.factory.annotation.Value;
+import com.wfr.springboot.base.environment.BaseEnvironment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -14,7 +16,7 @@ import java.util.Optional;
  * @since 2022/7/7
  */
 @ConfigurationProperties(prefix = "aliyun.sls.log")
-public class SlsLogProjectProperties {
+public class SlsLogProjectProperties implements InitializingBean {
 
     /**
      * 日志服务的项目
@@ -47,14 +49,18 @@ public class SlsLogProjectProperties {
     private String userAgent;
 
     public static ProjectConfig generateProjectConfig(SlsLogProjectProperties properties) {
-        return new ProjectConfig(
-                properties.getProject(),
-                properties.getEndpoint(),
-                properties.getAccessKeyId(),
-                properties.getAccessKeySecret(),
-                properties.getStsToken(),
-                Optional.ofNullable(properties.getUserAgent()).orElse(ProjectConfig.DEFAULT_USER_AGENT)
-        );
+        try {
+            return new ProjectConfig(
+                    properties.getProject(),
+                    properties.getEndpoint(),
+                    properties.getAccessKeyId(),
+                    properties.getAccessKeySecret(),
+                    properties.getStsToken(),
+                    Optional.ofNullable(properties.getUserAgent()).orElse(ProjectConfig.DEFAULT_USER_AGENT)
+            );
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("阿里云SLS日志服务参数配置异常", e);
+        }
     }
 
     public String getProject() {
@@ -111,5 +117,12 @@ public class SlsLogProjectProperties {
 
     public void setLogStore(String logStore) {
         this.logStore = logStore;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (this.logStore == null) {
+            this.logStore = BaseEnvironment.serverName;
+        }
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 
 import java.util.List;
@@ -28,13 +29,14 @@ import java.util.List;
 @Configuration
 @ConditionalOnClass({LogService.class, Producer.class})
 @AutoConfigureAfter({LogContextAutoConfiguration.class})
-@ConditionalOnProperty(prefix = "aliyun.sls.log", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "aliyun.sls.log", name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({SlsLogProjectProperties.class, SlsLogProducerProperties.class})
 public class SlsLogAutoConfiguration implements Ordered {
 
     public static final int ORDER_VALUE = Ordered.LOWEST_PRECEDENCE - 1;
 
     @Bean
+    @Primary
     public LogService slsLogProducerService(ObjectProvider<LogContextProperties> logContextProperties,
                                             List<LogInterceptor> logInterceptors,
                                             SlsLogProjectProperties projectProperties,

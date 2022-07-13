@@ -26,8 +26,10 @@ public class LogServiceAutoConfiguration implements Ordered {
 
     public static final int ORDER_VALUE = Ordered.LOWEST_PRECEDENCE;
 
-    @Bean
-    @ConditionalOnMissingBean
+    public static final String DEFAULT_LOG_SERVICE = "defaultLogService";
+
+    @Bean(DEFAULT_LOG_SERVICE)
+    @ConditionalOnMissingBean(name = {DEFAULT_LOG_SERVICE})
     public LogService defaultLogService(ObjectProvider<LogContextProperties> logContextProperties, List<LogInterceptor> logInterceptors) {
         LogContextProperties properties = logContextProperties.getIfAvailable();
         if (properties == null) {
