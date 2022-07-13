@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wfr.springboot.base.log.context.starter.LogContextAutoConfiguration,\
+  com.wfr.springboot.base.log.context.starter.LogServiceAutoConfiguration

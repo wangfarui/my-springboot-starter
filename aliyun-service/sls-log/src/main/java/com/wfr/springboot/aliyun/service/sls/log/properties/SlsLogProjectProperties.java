@@ -1,7 +1,9 @@
 package com.wfr.springboot.aliyun.service.sls.log.properties;
 
 import com.aliyun.openservices.aliyun.log.producer.ProjectConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -11,7 +13,7 @@ import java.util.Optional;
  * @author wangfarui
  * @since 2022/7/7
  */
-@ConfigurationProperties(prefix = "sls.log.project")
+@ConfigurationProperties(prefix = "aliyun.sls.log")
 public class SlsLogProjectProperties {
 
     /**
@@ -19,21 +21,30 @@ public class SlsLogProjectProperties {
      */
     private String project;
 
-    private String endpoint;
-
-    private String accessKeyId;
-
-    private String accessKeySecret;
-
-    private String stsToken;
-
-    private String userAgent;
-
     /**
      * 日志库
      * <p>所属于 {@link this#project} 下
      */
     private String logStore;
+
+    /**
+     * 连接点（地名）
+     */
+    private String endpoint;
+
+    /**
+     * 用户标识ID
+     */
+    private String accessKeyId;
+
+    /**
+     * 用户验证密钥
+     */
+    private String accessKeySecret;
+
+    private String stsToken;
+
+    private String userAgent;
 
     public static ProjectConfig generateProjectConfig(SlsLogProjectProperties properties) {
         return new ProjectConfig(
@@ -50,27 +61,55 @@ public class SlsLogProjectProperties {
         return project;
     }
 
+    public void setProject(String project) {
+        this.project = project;
+    }
+
     public String getEndpoint() {
         return endpoint;
+    }
+
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
     }
 
     public String getAccessKeyId() {
         return accessKeyId;
     }
 
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
+    }
+
     public String getAccessKeySecret() {
         return accessKeySecret;
+    }
+
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
     }
 
     public String getStsToken() {
         return stsToken;
     }
 
+    public void setStsToken(String stsToken) {
+        this.stsToken = stsToken;
+    }
+
     public String getUserAgent() {
         return userAgent;
     }
 
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
     public String getLogStore() {
         return logStore;
+    }
+
+    public void setLogStore(String logStore) {
+        this.logStore = logStore;
     }
 }

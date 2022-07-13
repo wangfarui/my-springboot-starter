@@ -29,6 +29,11 @@
                 <artifactId>environment</artifactId>
                 <version>${base.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.wfr.springboot</groupId>
+                <artifactId>log-context</artifactId>
+                <version>${base.version}</version>
+            </dependency>
 
             <!-- aliyun-service -->
             <dependency>

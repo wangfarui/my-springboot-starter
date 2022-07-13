@@ -1,4 +1,4 @@
-package com.wfr.springboot.base.environment.initializer;
+package com.wfr.springboot.base.environment.starter;
 
 import com.wfr.springboot.base.environment.BaseEnvironment;
 import lombok.NonNull;

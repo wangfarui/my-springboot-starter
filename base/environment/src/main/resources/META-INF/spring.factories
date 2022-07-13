@@ -1,1 +1,4 @@
-org.springframework.context.ApplicationContextInitializer=com.wfr.springboot.base.environment.initializer.BaseEnvironmentInitializer
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.wfr.springboot.base.environment.starter.BaseEnvironmentPostProcessor
+org.springframework.context.ApplicationContextInitializer=\
+  com.wfr.springboot.base.environment.starter.BaseEnvironmentInitializer

@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author wangfarui
  * @since 2022/7/7
  */
-@ConfigurationProperties(prefix = "sls.log.producer")
+@ConfigurationProperties(prefix = "aliyun.sls.log.producer")
 public class SlsLogProducerProperties {
 
     /**

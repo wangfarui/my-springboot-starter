@@ -21,5 +21,9 @@
             <groupId>com.wfr.springboot</groupId>
             <artifactId>environment</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wfr.springboot</groupId>
+            <artifactId>log-context</artifactId>
+        </dependency>
     </dependencies>
 </project>
