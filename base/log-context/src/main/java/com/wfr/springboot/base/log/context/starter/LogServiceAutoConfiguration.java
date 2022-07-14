@@ -4,8 +4,10 @@ import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.properties.LogContextProperties;
 import com.wfr.springboot.base.log.context.service.GenericLogService;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,7 @@ import java.util.List;
  * @since 2022/7/12
  */
 @Configuration
+@ConditionalOnClass(Logger.class)
 @AutoConfigureAfter(LogContextAutoConfiguration.class)
 public class LogServiceAutoConfiguration implements Ordered {
 
