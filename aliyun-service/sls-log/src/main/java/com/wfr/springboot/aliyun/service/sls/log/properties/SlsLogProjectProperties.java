@@ -19,6 +19,11 @@ import java.util.Optional;
 public class SlsLogProjectProperties implements InitializingBean {
 
     /**
+     * 开启阿里云SLS日志服务
+     */
+    private Boolean enabled = true;
+
+    /**
      * 日志服务的项目
      */
     private String project;
@@ -61,6 +66,14 @@ public class SlsLogProjectProperties implements InitializingBean {
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("阿里云SLS日志服务参数配置异常", e);
         }
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getProject() {

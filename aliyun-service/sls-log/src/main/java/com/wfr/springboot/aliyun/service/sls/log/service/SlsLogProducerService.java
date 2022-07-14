@@ -5,7 +5,7 @@ import com.aliyun.openservices.aliyun.log.producer.Producer;
 import com.aliyun.openservices.aliyun.log.producer.ProducerConfig;
 import com.aliyun.openservices.aliyun.log.producer.ProjectConfig;
 import com.aliyun.openservices.log.common.LogItem;
-import com.wfr.springboot.aliyun.service.sls.log.content.SlsLogData;
+import com.wfr.springboot.aliyun.service.sls.log.SlsLogData;
 import com.wfr.springboot.aliyun.service.sls.log.properties.SlsLogProducerProperties;
 import com.wfr.springboot.aliyun.service.sls.log.properties.SlsLogProjectProperties;
 import com.wfr.springboot.base.log.context.LogData;

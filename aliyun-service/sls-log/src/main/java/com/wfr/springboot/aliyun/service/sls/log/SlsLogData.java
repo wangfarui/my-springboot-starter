@@ -1,4 +1,4 @@
-package com.wfr.springboot.aliyun.service.sls.log.content;
+package com.wfr.springboot.aliyun.service.sls.log;
 
 import com.wfr.springboot.base.environment.BaseEnvironment;
 import com.wfr.springboot.base.log.context.LogData;
