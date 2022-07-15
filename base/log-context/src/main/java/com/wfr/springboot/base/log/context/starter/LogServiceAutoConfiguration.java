@@ -27,7 +27,7 @@ import java.util.List;
 @AutoConfigureAfter(LogContextAutoConfiguration.class)
 public class LogServiceAutoConfiguration implements Ordered {
 
-    public static final int ORDER_VALUE = Ordered.LOWEST_PRECEDENCE;
+    public static final int ORDER_PRECEDENCE = Ordered.LOWEST_PRECEDENCE;
 
     public static final String DEFAULT_LOG_SERVICE = "defaultLogService";
 
@@ -43,6 +43,6 @@ public class LogServiceAutoConfiguration implements Ordered {
 
     @Override
     public int getOrder() {
-        return ORDER_VALUE;
+        return ORDER_PRECEDENCE;
     }
 }

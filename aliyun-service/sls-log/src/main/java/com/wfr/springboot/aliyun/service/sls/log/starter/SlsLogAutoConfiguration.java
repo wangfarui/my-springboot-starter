@@ -33,7 +33,7 @@ import java.util.List;
 @EnableConfigurationProperties({SlsLogProjectProperties.class, SlsLogProducerProperties.class})
 public class SlsLogAutoConfiguration implements Ordered {
 
-    public static final int ORDER_VALUE = Ordered.LOWEST_PRECEDENCE - 1;
+    public static final int ORDER_PRECEDENCE = Ordered.LOWEST_PRECEDENCE - 1;
 
     @Bean
     @Primary
@@ -50,6 +50,6 @@ public class SlsLogAutoConfiguration implements Ordered {
 
     @Override
     public int getOrder() {
-        return ORDER_VALUE;
+        return ORDER_PRECEDENCE;
     }
 }
