@@ -3,20 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>dependency-framework</artifactId>
+        <artifactId>base</artifactId>
         <groupId>com.wfr.springboot</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>web-starter</artifactId>
+    <artifactId>web-context</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.wfr.springboot</groupId>
             <artifactId>environment</artifactId>
@@ -25,9 +20,15 @@
             <groupId>com.wfr.springboot</groupId>
             <artifactId>log-context</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>com.wfr.springboot</groupId>
-            <artifactId>web-context</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
     </dependencies>
 </project>
