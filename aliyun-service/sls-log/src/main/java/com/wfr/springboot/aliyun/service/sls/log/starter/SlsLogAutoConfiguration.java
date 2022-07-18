@@ -41,11 +41,7 @@ public class SlsLogAutoConfiguration implements Ordered {
                                     List<LogInterceptor> logInterceptors,
                                     SlsLogProjectProperties projectProperties,
                                     SlsLogProducerProperties producerProperties) {
-        LogContextProperties properties = logContextProperties.getIfAvailable();
-        if (properties == null) {
-            properties = new LogContextProperties();
-        }
-        return new SlsLogService(properties, logInterceptors, projectProperties, producerProperties);
+        return new SlsLogService(logContextProperties.getIfAvailable(), logInterceptors, projectProperties, producerProperties);
     }
 
     @Override

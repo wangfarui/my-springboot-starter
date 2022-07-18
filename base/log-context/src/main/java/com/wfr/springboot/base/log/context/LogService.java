@@ -13,7 +13,9 @@ public interface LogService {
      *
      * @return 日志级别
      */
-    LogLever logLever();
+    default LogLever logLever() {
+        return LogLever.LOWEST_LOG_LEVER;
+    }
 
     /**
      * 是否可以推送日志
@@ -30,4 +32,5 @@ public interface LogService {
      * @param logData 日志信息
      */
     void put(LogData logData);
+
 }

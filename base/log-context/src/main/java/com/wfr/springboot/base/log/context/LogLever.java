@@ -11,5 +11,10 @@ public enum LogLever {
     DEBUG,
     INFO,
     WARN,
-    ERROR
+    ERROR;
+
+    public static LogLever LOWEST_LOG_LEVER = LogLever.TRACE;
+
+    public static LogLever HIGHEST_LOG_LEVER = LogLever.ERROR;
+
 }

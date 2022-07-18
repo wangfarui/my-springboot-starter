@@ -3,6 +3,7 @@ package com.wfr.springboot.base.log.context.starter;
 import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.properties.LogContextProperties;
+import com.wfr.springboot.base.log.context.service.AbstractLogService;
 import com.wfr.springboot.base.log.context.service.GenericLogService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.ObjectProvider;
@@ -29,16 +30,10 @@ public class LogServiceAutoConfiguration implements Ordered {
 
     public static final int ORDER_PRECEDENCE = Ordered.LOWEST_PRECEDENCE;
 
-    public static final String DEFAULT_LOG_SERVICE = "defaultLogService";
-
-    @Bean(DEFAULT_LOG_SERVICE)
-    @ConditionalOnMissingBean(name = {DEFAULT_LOG_SERVICE})
+    @Bean(AbstractLogService.DEFAULT_LOG_SERVICE)
+    @ConditionalOnMissingBean(name = {AbstractLogService.DEFAULT_LOG_SERVICE})
     public LogService defaultLogService(ObjectProvider<LogContextProperties> logContextProperties, List<LogInterceptor> logInterceptors) {
-        LogContextProperties properties = logContextProperties.getIfAvailable();
-        if (properties == null) {
-            properties = new LogContextProperties();
-        }
-        return new GenericLogService(properties, logInterceptors);
+        return new GenericLogService(logContextProperties.getIfAvailable(), logInterceptors);
     }
 
     @Override
