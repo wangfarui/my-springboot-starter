@@ -22,14 +22,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 阿里云SLS日志生产者服务 默认实现类
+ * 阿里云SLS日志服务 默认实现类
  *
  * @author wangfarui
  * @since 2022/7/7
  */
-public class SlsLogProducerService extends AbstractLogService implements InitializingBean, DisposableBean {
+public class SlsLogService extends AbstractLogService implements InitializingBean, DisposableBean {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SlsLogProducerService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SlsLogService.class);
 
     private final SlsLogProjectProperties projectProperties;
 
@@ -41,10 +41,10 @@ public class SlsLogProducerService extends AbstractLogService implements Initial
 
     private Producer producer;
 
-    public SlsLogProducerService(LogContextProperties logContextProperties,
-                                 List<LogInterceptor> logInterceptors,
-                                 SlsLogProjectProperties projectProperties,
-                                 SlsLogProducerProperties producerProperties) {
+    public SlsLogService(LogContextProperties logContextProperties,
+                         List<LogInterceptor> logInterceptors,
+                         SlsLogProjectProperties projectProperties,
+                         SlsLogProducerProperties producerProperties) {
         super(logContextProperties, logInterceptors);
         this.projectProperties = projectProperties;
         this.producerProperties = producerProperties;

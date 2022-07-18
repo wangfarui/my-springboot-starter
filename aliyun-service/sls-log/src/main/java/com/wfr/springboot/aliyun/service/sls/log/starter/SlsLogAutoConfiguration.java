@@ -3,7 +3,7 @@ package com.wfr.springboot.aliyun.service.sls.log.starter;
 import com.aliyun.openservices.aliyun.log.producer.Producer;
 import com.wfr.springboot.aliyun.service.sls.log.properties.SlsLogProducerProperties;
 import com.wfr.springboot.aliyun.service.sls.log.properties.SlsLogProjectProperties;
-import com.wfr.springboot.aliyun.service.sls.log.service.SlsLogProducerService;
+import com.wfr.springboot.aliyun.service.sls.log.service.SlsLogService;
 import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.properties.LogContextProperties;
@@ -37,15 +37,15 @@ public class SlsLogAutoConfiguration implements Ordered {
 
     @Bean
     @Primary
-    public LogService slsLogProducerService(ObjectProvider<LogContextProperties> logContextProperties,
-                                            List<LogInterceptor> logInterceptors,
-                                            SlsLogProjectProperties projectProperties,
-                                            SlsLogProducerProperties producerProperties) {
+    public LogService slsLogService(ObjectProvider<LogContextProperties> logContextProperties,
+                                    List<LogInterceptor> logInterceptors,
+                                    SlsLogProjectProperties projectProperties,
+                                    SlsLogProducerProperties producerProperties) {
         LogContextProperties properties = logContextProperties.getIfAvailable();
         if (properties == null) {
             properties = new LogContextProperties();
         }
-        return new SlsLogProducerService(properties, logInterceptors, projectProperties, producerProperties);
+        return new SlsLogService(properties, logInterceptors, projectProperties, producerProperties);
     }
 
     @Override
