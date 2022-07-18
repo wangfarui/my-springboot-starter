@@ -9,13 +9,14 @@
         <relativePath>../dependency-framework/framework-base/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
 
     <artifactId>aliyun-service</artifactId>
+    <description>阿里云服务模块</description>
+
     <modules>
         <module>sls-log</module>
     </modules>
-
-    <packaging>pom</packaging>
 
     <properties>
         <aliyun-log-producer.version>0.3.10</aliyun-log-producer.version>
