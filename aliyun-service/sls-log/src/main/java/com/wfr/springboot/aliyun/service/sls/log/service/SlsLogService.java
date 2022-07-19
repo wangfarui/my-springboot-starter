@@ -31,6 +31,8 @@ public class SlsLogService extends AbstractLogService implements InitializingBea
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SlsLogService.class);
 
+    private Producer producer;
+
     private final SlsLogProjectProperties projectProperties;
 
     private final SlsLogProducerProperties producerProperties;
@@ -38,8 +40,6 @@ public class SlsLogService extends AbstractLogService implements InitializingBea
     private final String project;
 
     private final String logStore;
-
-    private Producer producer;
 
     public SlsLogService(LogContextProperties logContextProperties,
                          List<LogInterceptor> logInterceptors,

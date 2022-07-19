@@ -12,12 +12,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "log")
 public class LogContextProperties {
 
+    public static final LogContextProperties DEFAULT_LOG_CONTEXT_PROPERTIES;
+
     /**
      * 默认日志级别
      */
     private LogLever lever = LogLever.INFO;
-
-    public static final LogContextProperties DEFAULT_LOG_CONTEXT_PROPERTIES;
 
     static {
         DEFAULT_LOG_CONTEXT_PROPERTIES = new LogContextProperties();

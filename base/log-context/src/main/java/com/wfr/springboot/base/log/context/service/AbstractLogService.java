@@ -21,6 +21,12 @@ import java.util.Optional;
 public abstract class AbstractLogService implements LogService {
 
     /**
+     * 默认日志服务Bean名称
+     * <p>默认日志要求必须继承 {@link AbstractLogService}
+     */
+    public static final String DEFAULT_LOG_SERVICE = "defaultLogService";
+
+    /**
      * 日志上下文属性配合
      */
     private final LogContextProperties logContextProperties;
@@ -30,12 +36,6 @@ public abstract class AbstractLogService implements LogService {
      * <p>默认不校验拦截器是否重复
      */
     private final List<LogInterceptor> logInterceptors;
-
-    /**
-     * 默认日志服务Bean名称
-     * <p>默认日志要求必须继承 {@link AbstractLogService}
-     */
-    public static final String DEFAULT_LOG_SERVICE = "defaultLogService";
 
     public AbstractLogService() {
         this(null, null);

@@ -15,8 +15,6 @@ import java.net.UnknownHostException;
  */
 public abstract class BaseEnvironment {
 
-    private static ConfigurableApplicationContext applicationContext;
-
     /**
      * 服务器IP
      */
@@ -28,6 +26,16 @@ public abstract class BaseEnvironment {
      */
     public static String serverName;
 
+    /**
+     * spring 应用上下文
+     */
+    private static ConfigurableApplicationContext applicationContext;
+
+    /**
+     * 配置应用上下文
+     *
+     * @param applicationContext {@link ConfigurableApplicationContext}
+     */
     public static void setApplicationContext(ConfigurableApplicationContext applicationContext) {
         BaseEnvironment.applicationContext = applicationContext;
     }
