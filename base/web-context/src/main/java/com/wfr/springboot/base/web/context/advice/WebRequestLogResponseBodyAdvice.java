@@ -1,4 +1,4 @@
-package com.wfr.springboot.base.web.context.advice.log;
+package com.wfr.springboot.base.web.context.advice;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @since 2022/7/18
  */
 @ControllerAdvice
-public class LogResponseBodyAdvice implements ResponseBodyAdvice<Object> {
+public class WebRequestLogResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
