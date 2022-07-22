@@ -7,6 +7,7 @@ import com.wfr.springboot.aliyun.service.sls.log.service.SlsLogService;
 import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.properties.LogContextProperties;
+import com.wfr.springboot.base.log.context.service.AbstractLogService;
 import com.wfr.springboot.base.log.context.starter.LogContextAutoConfiguration;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -37,10 +38,10 @@ public class SlsLogAutoConfiguration implements Ordered {
 
     @Bean
     @Primary
-    public LogService slsLogService(ObjectProvider<LogContextProperties> logContextProperties,
-                                    List<LogInterceptor> logInterceptors,
-                                    SlsLogProjectProperties projectProperties,
-                                    SlsLogProducerProperties producerProperties) {
+    public AbstractLogService slsLogService(ObjectProvider<LogContextProperties> logContextProperties,
+                                            List<LogInterceptor> logInterceptors,
+                                            SlsLogProjectProperties projectProperties,
+                                            SlsLogProducerProperties producerProperties) {
         return new SlsLogService(logContextProperties.getIfAvailable(), logInterceptors, projectProperties, producerProperties);
     }
 

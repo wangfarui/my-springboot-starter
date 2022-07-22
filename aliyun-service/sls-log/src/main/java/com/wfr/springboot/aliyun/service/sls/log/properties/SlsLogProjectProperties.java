@@ -2,10 +2,9 @@ package com.wfr.springboot.aliyun.service.sls.log.properties;
 
 import com.aliyun.openservices.aliyun.log.producer.ProjectConfig;
 import com.wfr.springboot.base.environment.BaseEnvironment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -54,18 +53,22 @@ public class SlsLogProjectProperties implements InitializingBean {
     private String userAgent;
 
     public static ProjectConfig generateProjectConfig(SlsLogProjectProperties properties) {
-        try {
-            return new ProjectConfig(
-                    properties.getProject(),
-                    properties.getEndpoint(),
-                    properties.getAccessKeyId(),
-                    properties.getAccessKeySecret(),
-                    properties.getStsToken(),
-                    Optional.ofNullable(properties.getUserAgent()).orElse(ProjectConfig.DEFAULT_USER_AGENT)
-            );
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("阿里云SLS日志服务参数配置异常", e);
+        return new ProjectConfig(
+                properties.getProject(),
+                properties.getEndpoint(),
+                properties.getAccessKeyId(),
+                properties.getAccessKeySecret(),
+                properties.getStsToken(),
+                Optional.ofNullable(properties.getUserAgent()).orElse(ProjectConfig.DEFAULT_USER_AGENT)
+        );
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (this.logStore == null) {
+            this.logStore = BaseEnvironment.serverName;
         }
+        checkProjectPropertiesValue();
     }
 
     public Boolean getEnabled() {
@@ -132,10 +135,25 @@ public class SlsLogProjectProperties implements InitializingBean {
         this.logStore = logStore;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        if (this.logStore == null) {
-            this.logStore = BaseEnvironment.serverName;
+    private void checkProjectPropertiesValue() {
+        if (StringUtils.isEmpty(this.project)) {
+            throwNullValueException("project");
         }
+        if (StringUtils.isEmpty(this.logStore)) {
+            throwNullValueException("logStore");
+        }
+        if (StringUtils.isEmpty(this.endpoint)) {
+            throwNullValueException("endpoint");
+        }
+        if (StringUtils.isEmpty(this.accessKeyId)) {
+            throwNullValueException("accessKeyId");
+        }
+        if (StringUtils.isEmpty(this.accessKeySecret)) {
+            throwNullValueException("accessKeySecret");
+        }
+    }
+
+    private void throwNullValueException(String key) {
+        throw new IllegalArgumentException("阿里云SLS日志参数[" + key + "]配置不能为空, 请检查配置文件");
     }
 }
