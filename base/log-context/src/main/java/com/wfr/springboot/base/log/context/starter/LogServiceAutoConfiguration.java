@@ -1,6 +1,5 @@
 package com.wfr.springboot.base.log.context.starter;
 
-import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.properties.LogContextProperties;
 import com.wfr.springboot.base.log.context.service.AbstractLogService;
@@ -32,7 +31,8 @@ public class LogServiceAutoConfiguration implements Ordered {
 
     @Bean(AbstractLogService.DEFAULT_LOG_SERVICE)
     @ConditionalOnMissingBean(name = {AbstractLogService.DEFAULT_LOG_SERVICE})
-    public LogService defaultLogService(ObjectProvider<LogContextProperties> logContextProperties, List<LogInterceptor> logInterceptors) {
+    public AbstractLogService defaultLogService(ObjectProvider<LogContextProperties> logContextProperties,
+                                                List<LogInterceptor> logInterceptors) {
         return new GenericLogService(logContextProperties.getIfAvailable(), logInterceptors);
     }
 

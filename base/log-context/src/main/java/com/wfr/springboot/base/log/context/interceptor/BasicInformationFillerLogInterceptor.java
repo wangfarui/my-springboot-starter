@@ -1,6 +1,7 @@
 package com.wfr.springboot.base.log.context.interceptor;
 
 import com.wfr.springboot.base.log.context.LogConstants;
+import com.wfr.springboot.base.log.context.LogContext;
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogService;
 import org.springframework.core.Ordered;
@@ -18,6 +19,7 @@ public class BasicInformationFillerLogInterceptor implements LogInterceptor, Ord
     @Override
     public void processBeforePutLog(LogService logService, LogData logData) {
         long useTime = System.currentTimeMillis() - logData.getStartTime();
+        logData.add(LogConstants.LOG_TRACE_ID, LogContext.getTraceId());
         logData.add(LogConstants.LOG_LEVEL, logData.getLogLever());
         logData.add(LogConstants.LOG_USE_TIME, useTime + "ms");
     }
