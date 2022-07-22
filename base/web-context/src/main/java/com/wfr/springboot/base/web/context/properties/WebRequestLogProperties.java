@@ -1,7 +1,7 @@
 package com.wfr.springboot.base.web.context.properties;
 
 import com.wfr.springboot.base.log.context.LogLever;
-import com.wfr.springboot.base.web.context.starter.WebRequestLogAutoConfiguration;
+import com.wfr.springboot.base.web.context.starter.RequestLogServiceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.util.PathMatcher;
@@ -12,7 +12,7 @@ import org.springframework.util.PathMatcher;
  * @author wangfarui
  * @since 2022/7/18
  */
-@ConfigurationProperties(prefix = WebRequestLogAutoConfiguration.WEB_REQUEST_LOG_PROPERTIES_PREFIX)
+@ConfigurationProperties(prefix = RequestLogServiceAutoConfiguration.WEB_REQUEST_LOG_PROPERTIES_PREFIX)
 public class WebRequestLogProperties {
 
     /**

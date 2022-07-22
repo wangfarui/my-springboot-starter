@@ -2,8 +2,13 @@ package com.wfr.springboot.base.web.context.service;
 
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogService;
+import com.wfr.springboot.base.log.context.interceptor.BasicInformationFillerLogInterceptor;
+import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.service.AbstractLogService;
-import com.wfr.springboot.base.web.context.properties.WebRequestLogProperties;
+import org.springframework.beans.factory.InitializingBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * web请求的日志服务
@@ -11,20 +16,26 @@ import com.wfr.springboot.base.web.context.properties.WebRequestLogProperties;
  * @author wangfarui
  * @since 2022/7/15
  */
-public class WebRequestLogService implements LogService {
+public class WebRequestLogService implements LogService, InitializingBean {
 
     private final AbstractLogService delegate;
 
-    private final WebRequestLogProperties logProperties;
+    private final List<LogInterceptor> logInterceptors = new ArrayList<>();
 
-    public WebRequestLogService(AbstractLogService logService, WebRequestLogProperties logProperties) {
+    public WebRequestLogService(AbstractLogService logService) {
         this.delegate = logService;
-        this.logProperties = logProperties;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        BasicInformationFillerLogInterceptor logInterceptor = new BasicInformationFillerLogInterceptor();
+        logInterceptors.add(logInterceptor);
     }
 
     @Override
     public void put(LogData logData) {
-        logData.logLever(logProperties.getLever());
+        logInterceptors.forEach(logInterceptor -> logInterceptor.processBeforePutLog(this, logData));
         delegate.doPut(logData);
     }
+
 }
