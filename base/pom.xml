@@ -19,6 +19,7 @@
         <module>log-context</module>
         <module>web-context</module>
         <module>context</module>
+        <module>dao-context</module>
     </modules>
 
 </project>
