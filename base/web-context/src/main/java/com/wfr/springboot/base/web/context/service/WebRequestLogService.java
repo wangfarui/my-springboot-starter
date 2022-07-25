@@ -1,5 +1,6 @@
 package com.wfr.springboot.base.web.context.service;
 
+import com.wfr.springboot.base.log.context.LogContext;
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.interceptor.BasicInformationFillerLogInterceptor;
@@ -36,6 +37,7 @@ public class WebRequestLogService implements LogService, InitializingBean {
     public void put(LogData logData) {
         logInterceptors.forEach(logInterceptor -> logInterceptor.processBeforePutLog(this, logData));
         delegate.doPut(logData);
+        LogContext.clearNowTraceId();
     }
 
 }

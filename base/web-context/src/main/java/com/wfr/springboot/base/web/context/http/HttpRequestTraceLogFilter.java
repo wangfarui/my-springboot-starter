@@ -44,9 +44,9 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
 
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(HttpRequestTraceLogFilter.class);
 
-    private Set<String> excludePatternSet;
+    private Set<String> excludePatternSet = new HashSet<>();
 
-    private Set<String> includePatternSet;
+    private Set<String> includePatternSet = new HashSet<>();
 
     public HttpRequestTraceLogFilter(@Qualifier(WEB_REQUEST_LOG_SERVICE_BEAN_NAME) @Nullable LogService logService,
                                      WebRequestLogProperties logProperties) {
@@ -58,10 +58,14 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
         WebRequestLogProperties.FilterPatternsProperties filterPatternsProperties = this.logProperties.getFilter();
-        Set<String> excludePatternSet = Arrays.stream(filterPatternsProperties.getExcludePatterns()).collect(Collectors.toSet());
-        Set<String> includePatternSet = Arrays.stream(filterPatternsProperties.getIncludePatterns()).collect(Collectors.toSet());
-        this.excludePatternSet = excludePatternSet;
-        this.includePatternSet = includePatternSet;
+        if (filterPatternsProperties != null) {
+            if (filterPatternsProperties.getExcludePatterns() != null) {
+                this.excludePatternSet = Arrays.stream(filterPatternsProperties.getExcludePatterns()).collect(Collectors.toSet());
+            }
+            if (filterPatternsProperties.getIncludePatterns() != null) {
+                this.includePatternSet = Arrays.stream(filterPatternsProperties.getIncludePatterns()).collect(Collectors.toSet());
+            }
+        }
     }
 
     @Override
@@ -142,6 +146,6 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
             }
             return true;
         }
-        return this.excludePatternSet.contains(requestURI);
+        return this.excludePatternSet.isEmpty() || this.excludePatternSet.contains(requestURI);
     }
 }
