@@ -37,4 +37,11 @@ public abstract class LogContext {
     public static String createTraceId() {
         return UUID.randomUUID().toString();
     }
+
+    /**
+     * 清除当前线程 traceId
+     */
+    public static void clearNowTraceId() {
+        LOG_TRACE_ID_CONTEXT.remove();
+    }
 }

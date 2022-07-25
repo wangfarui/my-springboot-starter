@@ -25,6 +25,11 @@ public class BasicInformationFillerLogInterceptor implements LogInterceptor, Ord
     }
 
     @Override
+    public void processAfterPutLog(LogService logService, LogData logData) {
+        LogContext.clearNowTraceId();
+    }
+
+    @Override
     public int getOrder() {
         return ORDER_PRECEDENCE;
     }
