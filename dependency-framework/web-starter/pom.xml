@@ -29,5 +29,9 @@
             <groupId>com.wfr.springboot</groupId>
             <artifactId>web-context</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wfr.springboot</groupId>
+            <artifactId>dao-context</artifactId>
+        </dependency>
     </dependencies>
 </project>
