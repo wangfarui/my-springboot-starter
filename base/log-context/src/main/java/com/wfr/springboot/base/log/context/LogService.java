@@ -22,7 +22,7 @@ public interface LogService {
      *
      * @return true -> 可以
      */
-    default boolean canPut(LogLever logLever) {
+    default boolean canPush(LogLever logLever) {
         return logLever().ordinal() <= logLever.ordinal();
     }
 
@@ -31,6 +31,6 @@ public interface LogService {
      *
      * @param logData 日志信息
      */
-    void put(LogData logData);
+    void push(LogData logData);
 
 }

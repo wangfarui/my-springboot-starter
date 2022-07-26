@@ -116,7 +116,7 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
                 logData.add(HttpRequestTraceLogKeyConstants.REQUEST_RESPONSE_STATUS, responseWrapper.getStatus());
                 String responseBody = IOUtils.toString(responseWrapper.getContentAsByteArray(), CHARSET.name());
                 logData.add(HttpRequestTraceLogKeyConstants.REQUEST_RESPONSE_BODY, responseBody);
-                Logger.put(logData, this.logService);
+                Logger.push(logData, this.logService);
             } catch (Throwable throwable) {
                 LOGGER.error("写入http请求日志异常", throwable);
             }

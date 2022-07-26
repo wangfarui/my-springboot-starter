@@ -23,7 +23,7 @@ public class GenericLogService extends AbstractLogService {
     }
 
     @Override
-    public void doPut(LogData logData) {
+    public void doPush(LogData logData) {
         String contentStr = logData.formatLogContents();
         switch (logData.getLogLever()) {
             case TRACE:

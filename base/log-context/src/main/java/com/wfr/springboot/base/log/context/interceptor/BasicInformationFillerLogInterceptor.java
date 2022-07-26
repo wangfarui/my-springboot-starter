@@ -17,16 +17,11 @@ public class BasicInformationFillerLogInterceptor implements LogInterceptor, Ord
     public static final int ORDER_PRECEDENCE = Ordered.LOWEST_PRECEDENCE;
 
     @Override
-    public void processBeforePutLog(LogService logService, LogData logData) {
+    public void processBeforePushLog(LogService logService, LogData logData) {
         long useTime = System.currentTimeMillis() - logData.getStartTime();
         logData.add(LogConstants.LOG_TRACE_ID, LogContext.getTraceId());
         logData.add(LogConstants.LOG_LEVEL, logData.getLogLever());
         logData.add(LogConstants.LOG_USE_TIME, useTime + "ms");
-    }
-
-    @Override
-    public void processAfterPutLog(LogService logService, LogData logData) {
-        LogContext.clearNowTraceId();
     }
 
     @Override

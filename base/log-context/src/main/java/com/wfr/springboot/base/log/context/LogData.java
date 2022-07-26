@@ -29,6 +29,11 @@ public class LogData {
      */
     private final long startTime;
 
+    /**
+     * 空日志实体
+     */
+    private static final LogData EMPTY_LOG_DATA = new LogData();
+
     public LogData() {
         this(LogLever.INFO);
     }
@@ -67,6 +72,24 @@ public class LogData {
     public static LogData createLogData(LogLever logLever) {
         Assert.notNull(logLever, "log lever must be not null");
         return new LogData(logLever);
+    }
+
+    /**
+     * 生成空日志实体, 一般用于try方法外做初始化
+     *
+     * @return LogData
+     */
+    public static LogData emptyLogData() {
+        return EMPTY_LOG_DATA;
+    }
+
+    /**
+     * 是否为空日志实体
+     *
+     * @return true -> 是
+     */
+    public boolean isEmptyLogData() {
+        return this == EMPTY_LOG_DATA;
     }
 
     /**
@@ -180,7 +203,7 @@ public class LogData {
     /**
      * 推送日志
      */
-    public void put() {
-        Logger.put(this);
+    public void push() {
+        Logger.push(this);
     }
 }

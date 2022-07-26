@@ -60,9 +60,9 @@ public abstract class Logger {
      *
      * @param logData 日志信息
      */
-    public static void put(LogData logData) {
+    public static void push(LogData logData) {
         LogService logService = defaultLogService();
-        put(logData, logService);
+        push(logData, logService);
     }
 
     /**
@@ -71,8 +71,8 @@ public abstract class Logger {
      * @param logData    日志信息
      * @param logService 日志服务
      */
-    public static void put(LogData logData, LogService logService) {
-        logService.put(logData);
+    public static void push(LogData logData, LogService logService) {
+        logService.push(logData);
     }
 
     private static <T extends LogData> T generateLogDataInstance(Class<T> clazz, LogLever logLever) {

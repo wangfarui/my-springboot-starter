@@ -1,12 +1,9 @@
 package com.wfr.springboot.base.web.context.service;
 
-import com.wfr.springboot.base.log.context.LogContext;
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogService;
-import com.wfr.springboot.base.log.context.interceptor.BasicInformationFillerLogInterceptor;
 import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.service.AbstractLogService;
-import org.springframework.beans.factory.InitializingBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +14,7 @@ import java.util.List;
  * @author wangfarui
  * @since 2022/7/15
  */
-public class WebRequestLogService implements LogService, InitializingBean {
+public class WebRequestLogService implements LogService {
 
     private final AbstractLogService delegate;
 
@@ -28,16 +25,8 @@ public class WebRequestLogService implements LogService, InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        BasicInformationFillerLogInterceptor logInterceptor = new BasicInformationFillerLogInterceptor();
-        logInterceptors.add(logInterceptor);
-    }
-
-    @Override
-    public void put(LogData logData) {
-        logInterceptors.forEach(logInterceptor -> logInterceptor.processBeforePutLog(this, logData));
-        delegate.doPut(logData);
-        LogContext.clearNowTraceId();
+    public void push(LogData logData) {
+        this.delegate.push(logData, true);
     }
 
 }

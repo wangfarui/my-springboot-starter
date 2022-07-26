@@ -11,11 +11,11 @@ import com.wfr.springboot.base.log.context.LogService;
  */
 public interface LogInterceptor {
 
-    default void processBeforePutLog(LogService logService, LogData logData) {
+    default void processBeforePushLog(LogService logService, LogData logData) {
 
     }
 
-    default void processAfterPutLog(LogService logService, LogData logData) {
+    default void processAfterPushLog(LogService logService, LogData logData) {
 
     }
 }

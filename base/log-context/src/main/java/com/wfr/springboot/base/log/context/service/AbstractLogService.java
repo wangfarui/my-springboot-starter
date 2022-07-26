@@ -1,5 +1,6 @@
 package com.wfr.springboot.base.log.context.service;
 
+import com.wfr.springboot.base.log.context.LogContext;
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogLever;
 import com.wfr.springboot.base.log.context.LogService;
@@ -58,13 +59,23 @@ public abstract class AbstractLogService implements LogService {
     }
 
     @Override
-    public void put(LogData logData) {
-        if (!canPut(logData.getLogLever())) {
-            return;
+    public void push(LogData logData) {
+        push(logData, false);
+    }
+
+    /**
+     * 发送是否可以跳过检测的日志
+     *
+     * @param logData        日志信息
+     * @param skipInspection 是否跳过检测
+     */
+    public void push(LogData logData, boolean skipInspection) {
+        if (skipInspection || canPush(logData.getLogLever())) {
+            logInterceptors.forEach(logInterceptor -> logInterceptor.processBeforePushLog(this, logData));
+            doPush(logData);
+            logInterceptors.forEach(logInterceptor -> logInterceptor.processAfterPushLog(this, logData));
         }
-        logInterceptors.forEach(logInterceptor -> logInterceptor.processBeforePutLog(this, logData));
-        doPut(logData);
-        logInterceptors.forEach(logInterceptor -> logInterceptor.processAfterPutLog(this, logData));
+        finishPush();
     }
 
     /**
@@ -72,10 +83,19 @@ public abstract class AbstractLogService implements LogService {
      *
      * @param logData 日志信息
      */
-    public void doPut(LogData logData) {
+    public void doPush(LogData logData) {
     }
 
+    /**
+     * 添加日志拦截器
+     *
+     * @param logInterceptor 日志拦截器
+     */
     public void addLogInterceptor(LogInterceptor logInterceptor) {
         this.logInterceptors.add(logInterceptor);
+    }
+
+    private void finishPush() {
+        // LogContext.clearNowTraceId();
     }
 }

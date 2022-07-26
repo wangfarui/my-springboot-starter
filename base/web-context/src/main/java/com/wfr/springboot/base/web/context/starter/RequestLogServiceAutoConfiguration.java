@@ -3,9 +3,11 @@ package com.wfr.springboot.base.web.context.starter;
 import com.wfr.springboot.base.environment.BaseEnvironment;
 import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.service.AbstractLogService;
+import com.wfr.springboot.base.log.context.starter.LogServiceAutoConfiguration;
 import com.wfr.springboot.base.web.context.properties.WebRequestLogProperties;
 import com.wfr.springboot.base.web.context.service.WebRequestLogService;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(AbstractLogService.class)
 @ConditionalOnProperty(prefix = RequestLogServiceAutoConfiguration.WEB_REQUEST_LOG_PROPERTIES_PREFIX,
         name = "enabled", havingValue = "true", matchIfMissing = true)
+@AutoConfigureAfter({LogServiceAutoConfiguration.class})
 @EnableConfigurationProperties(WebRequestLogProperties.class)
 //@ComponentScan(basePackageClasses = {WebRequestLogResponseBodyAdvice.class})
 public class RequestLogServiceAutoConfiguration {

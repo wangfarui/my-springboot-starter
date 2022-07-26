@@ -75,7 +75,7 @@ public class SlsLogService extends AbstractLogService implements InitializingBea
     }
 
     @Override
-    public void doPut(LogData logData) {
+    public void doPush(LogData logData) {
         LogItem logItem = packaging(logData);
         List<LogItem> logItems = Collections.singletonList(logItem);
         try {
