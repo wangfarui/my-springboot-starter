@@ -16,6 +16,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -110,7 +111,15 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
                             URLDecoder.decode(queryString, StandardCharsets.UTF_8.name()));
                 }
                 if (!HttpMethod.GET.matches(method)) {
-                    String body = IOUtils.toString(requestWrapper.getInputStream(), CHARSET);
+                    try {
+                        ServletInputStream inputStream = requestWrapper.getInputStream();
+                        while (!inputStream.isFinished()) {
+                            inputStream.read();
+                        }
+                    } catch (IOException e) {
+                        LOGGER.error("读取请求body数据时IO异常", e);
+                    }
+                    String body = IOUtils.toString(requestWrapper.getContentAsByteArray(), CHARSET.name());
                     logData.add(HttpRequestTraceLogKeyConstants.REQUEST_BODY, body);
                 }
                 logData.add(HttpRequestTraceLogKeyConstants.REQUEST_RESPONSE_STATUS, responseWrapper.getStatus());
