@@ -1,7 +1,11 @@
 package com.wfr.springboot.base.log.context;
 
 import com.wfr.springboot.base.environment.BaseEnvironment;
+import com.wfr.springboot.base.log.context.service.AbstractLogService;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * 日志记录器
@@ -10,6 +14,8 @@ import org.springframework.beans.factory.ObjectProvider;
  * @since 2022/7/12
  */
 public abstract class Logger {
+
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(Logger.class);
 
     private static volatile LogService logService;
 
@@ -22,12 +28,19 @@ public abstract class Logger {
         if (logService == null) {
             synchronized (Logger.class) {
                 if (logService == null) {
-                    ObjectProvider<LogService> beanProvider = BaseEnvironment
-                            .applicationContext()
-                            .getBeanProvider(LogService.class);
+                    ConfigurableApplicationContext applicationContext = BaseEnvironment.applicationContext();
+                    ObjectProvider<LogService> beanProvider = applicationContext.getBeanProvider(LogService.class);
                     beanProvider.ifUnique(l -> logService = l);
                     if (logService == null) {
-                        throw new IllegalStateException("未找到默认日志服务, 确保LogService存在且唯一");
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.warn("未找到主日志服务, 确保Primary LogService存在且唯一");
+                        }
+                        try {
+                            logService = applicationContext.getBean(AbstractLogService.DEFAULT_LOG_SERVICE, LogService.class);
+                        } catch (BeansException e) {
+                            LOGGER.error("未找到默认日志服务, 确保Default LogService存在", e);
+                            throw e;
+                        }
                     }
                 }
             }
