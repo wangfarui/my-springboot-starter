@@ -29,6 +29,7 @@ import javax.sql.DataSource;
 @AutoConfigureBefore(JdbcTemplateAutoConfiguration.class)
 @EnableConfigurationProperties(JdbcProperties.class)
 @Import(JdbcTemplateExtensionConfiguration.class)
+@Deprecated
 public class DaoJdbcAutoConfiguration {
 
 

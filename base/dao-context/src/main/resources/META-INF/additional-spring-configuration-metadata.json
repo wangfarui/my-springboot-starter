@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "name": "dao.sql.log.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.wfr.springboot.base.dao.context.starter.DaoSqlLogAutoConfiguration",
+      "defaultValue": true,
+      "description": "开启数据访问层的sql日志打印."
+    }
+  ]
+}

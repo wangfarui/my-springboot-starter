@@ -1,9 +1,8 @@
 package com.wfr.springboot.base.dao.context.mybatis;
 
 import com.wfr.springboot.base.dao.context.log.SqlLogKeyConstants;
-import com.wfr.springboot.base.log.context.LogContext;
-import com.wfr.springboot.base.log.context.LogData;
-import com.wfr.springboot.base.log.context.LogLever;
+import com.wfr.springboot.base.dao.context.properties.DaoSqlLogProperties;
+import com.wfr.springboot.base.log.context.*;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -24,7 +23,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 
 /**
- * 用于记录mybatis中的sql中不包含officeId的sql
+ * MyBatis 的SQL拦截器
+ * <p>主要拦截 {@code insert}、{@code delete}、{@code update}、{@code select} 语句</p>
  *
  * @author wangfarui
  * @since 2022/7/26
@@ -36,9 +36,43 @@ import java.util.regex.Matcher;
 })
 public class MyBatisSqlInterceptor implements Interceptor {
 
+    /**
+     * 正常sql日志级别
+     */
+    private final LogLever normalSqlLogLevel;
+
+    /**
+     * 慢sql日志级别
+     */
+    private final LogLever slowSqlLogLevel;
+
+    /**
+     * 异常sql日志级别
+     */
+    private final LogLever errorSqlLogLevel;
+
+    /**
+     * 慢sql时间
+     */
+    private final long slowSqlTime;
+
+    /**
+     * 主日志服务
+     */
+    private final LogService logService;
+
+    public MyBatisSqlInterceptor(DaoSqlLogProperties sqlLogProperties) {
+        this.normalSqlLogLevel = sqlLogProperties.getNormalSqlLogLevel();
+        this.slowSqlLogLevel = sqlLogProperties.getSlowSqlLogLevel();
+        this.errorSqlLogLevel = sqlLogProperties.getErrorSqlLogLevel();
+        this.slowSqlTime = sqlLogProperties.getSlowSqlTime().toMillis();
+        this.logService = Logger.defaultLogService();
+    }
+
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         LogData logData = LogData.emptyLogData();
+        boolean isException = false;
         try {
             MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 
@@ -53,20 +87,26 @@ public class MyBatisSqlInterceptor implements Interceptor {
             // 获取真实的sql语句
             String sql = showSql(configuration, boundSql);
 
-            logData = LogData.info()
-                    .addTraceId(LogContext.getTraceId())
+            logData = LogData.createLogData(this.normalSqlLogLevel)
                     .add(SqlLogKeyConstants.SQL_METHOD, mappedStatement.getSqlCommandType())
                     .add(SqlLogKeyConstants.SQL_CONTENT, sql);
             return invocation.proceed();
         } catch (Throwable e) {
             if (!logData.isEmptyLogData()) {
-                logData.logLever(LogLever.ERROR);
+                isException = true;
+                logData.logLever(this.errorSqlLogLevel);
                 logData.addException(e);
             }
             throw e;
         } finally {
             if (!logData.isEmptyLogData()) {
-                logData.push();
+                if (!isException) {
+                    long currentTimeMillis = System.currentTimeMillis();
+                    if (currentTimeMillis - logData.getStartTime() > this.slowSqlTime) {
+                        logData.logLever(this.slowSqlLogLevel);
+                    }
+                }
+                this.logService.push(logData);
             }
         }
     }
