@@ -165,16 +165,6 @@ public class LogData {
     }
 
     /**
-     * 添加请求链路id
-     *
-     * @param traceId 链路id
-     * @return LogData
-     */
-    public LogData addTraceId(String traceId) {
-        return add(LogConstants.LOG_TRACE_ID, traceId);
-    }
-
-    /**
      * 添加日志内容
      *
      * @param key     日志key
@@ -196,7 +186,9 @@ public class LogData {
         for (Map.Entry<String, Object> entry : this.logContents.entrySet()) {
             sb.append(entry.getKey()).append(": ").append(entry.getValue()).append(", ");
         }
-        sb.deleteCharAt(sb.length() - 1).append("}");
+        if (sb.length() > 1) {
+            sb.delete(sb.length() - 2, sb.length()).append("}");
+        }
         return sb.toString();
     }
 

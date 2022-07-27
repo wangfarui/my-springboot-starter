@@ -36,7 +36,7 @@ public abstract class Logger {
                             LOGGER.warn("未找到主日志服务, 确保Primary LogService存在且唯一");
                         }
                         try {
-                            logService = applicationContext.getBean(AbstractLogService.DEFAULT_LOG_SERVICE, LogService.class);
+                            logService = applicationContext.getBean(AbstractLogService.DEFAULT_LOG_SERVICE, AbstractLogService.class);
                         } catch (BeansException e) {
                             LOGGER.error("未找到默认日志服务, 确保Default LogService存在", e);
                             throw e;

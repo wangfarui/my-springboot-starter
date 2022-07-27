@@ -1,6 +1,5 @@
 package com.wfr.springboot.base.log.context.service;
 
-import com.wfr.springboot.base.log.context.LogContext;
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogLever;
 import com.wfr.springboot.base.log.context.LogService;
