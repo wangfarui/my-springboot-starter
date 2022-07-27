@@ -49,8 +49,7 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
 
     private Set<String> includePatternSet = new HashSet<>();
 
-    public HttpRequestTraceLogFilter(@Qualifier(WEB_REQUEST_LOG_SERVICE_BEAN_NAME) @Nullable LogService logService,
-                                     WebRequestLogProperties logProperties) {
+    public HttpRequestTraceLogFilter(@Nullable LogService logService, WebRequestLogProperties logProperties) {
         this.logService = logService;
         this.logProperties = Optional.ofNullable(logProperties).orElse(new WebRequestLogProperties());
     }

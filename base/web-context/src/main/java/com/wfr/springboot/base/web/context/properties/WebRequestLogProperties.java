@@ -16,11 +16,6 @@ import org.springframework.util.PathMatcher;
 public class WebRequestLogProperties {
 
     /**
-     * web请求链路日志开关
-     */
-    private boolean enabled = true;
-
-    /**
      * web请求链路日志的日志级别
      */
     private LogLever lever = LogLever.TRACE;
@@ -30,14 +25,6 @@ public class WebRequestLogProperties {
      */
     @NestedConfigurationProperty
     private FilterPatternsProperties filter = new FilterPatternsProperties();
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 
     public LogLever getLever() {
         return lever;

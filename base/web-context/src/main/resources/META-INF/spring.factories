@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.wfr.springboot.base.web.context.starter.RequestLogServiceAutoConfiguration,\
-  com.wfr.springboot.base.web.context.starter.RequestTraceLogAutoConfiguration
+  com.wfr.springboot.base.web.context.starter.RequestLogServiceAutoConfiguration

@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "name": "web.log.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.wfr.springboot.base.web.context.starter.RequestLogServiceAutoConfiguration",
+      "defaultValue": true,
+      "description": "开启web请求链路日志."
+    }
+  ]
+}
