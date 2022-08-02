@@ -20,6 +20,7 @@
         <module>web-context</module>
         <module>context</module>
         <module>dao-context</module>
+        <module>bean-mapper</module>
     </modules>
 
 </project>
