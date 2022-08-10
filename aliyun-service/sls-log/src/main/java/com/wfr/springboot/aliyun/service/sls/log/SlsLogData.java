@@ -27,7 +27,7 @@ public class SlsLogData extends LogData {
     }
 
     public SlsLogData(LogLever logLever, String topic) {
-        this(logLever, topic, BaseEnvironment.serverIp);
+        this(logLever, topic, BaseEnvironment.serverIp());
     }
 
     public SlsLogData(LogLever logLever, String topic, String source) {

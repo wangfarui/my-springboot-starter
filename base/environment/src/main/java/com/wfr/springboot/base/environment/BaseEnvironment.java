@@ -6,6 +6,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.logging.Logger;
 
 /**
  * 基础服务的环境信息
@@ -18,18 +19,23 @@ public abstract class BaseEnvironment {
     /**
      * 服务器IP
      */
-    public static String serverIp;
+    private static String serverIp = "localhost";
 
     /**
      * 服务名称
      * <p>对应${spring.application.name}
      */
-    public static String serverName;
+    private static String serverName;
 
     /**
      * spring 应用上下文
      */
     private static ConfigurableApplicationContext applicationContext;
+
+    /**
+     * java util 日志器
+     */
+    private final static Logger LOGGER = Logger.getLogger("BaseEnvironment");
 
     /**
      * 配置应用上下文
@@ -41,6 +47,23 @@ public abstract class BaseEnvironment {
     }
 
     /**
+     * 环境配置
+     */
+    public static void configEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        try {
+            InetAddress localHost = InetAddress.getLocalHost();
+            BaseEnvironment.serverIp = localHost.getHostAddress();
+        } catch (UnknownHostException e) {
+            LOGGER.warning("无法获取本地Host");
+        }
+
+        String applicationName = environment.getProperty("spring.application.name");
+        if (applicationName != null) {
+            BaseEnvironment.serverName = applicationName;
+        }
+    }
+
+    /**
      * 获取当前环境 Spring 应用上下文
      */
     public static ConfigurableApplicationContext applicationContext() {
@@ -48,20 +71,20 @@ public abstract class BaseEnvironment {
     }
 
     /**
-     * 环境配置
+     * 获取当前环境的服务器ip地址
+     *
+     * @return Server IP
      */
-    public static void configEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        try {
-            InetAddress localHost = InetAddress.getLocalHost();
-            BaseEnvironment.serverIp = localHost.getHostAddress();
+    public static String serverIp() {
+        return serverIp;
+    }
 
-            String applicationName = environment.getProperty("spring.application.name");
-            if (applicationName != null) {
-                BaseEnvironment.serverName = applicationName;
-            }
-        } catch (UnknownHostException e) {
-            BaseEnvironment.serverIp = "localhost";
-            System.err.println("无法获取本地Host");
-        }
+    /**
+     * 获取当前环境的服务名称
+     *
+     * @return Server Name
+     */
+    public static String serverName() {
+        return serverName;
     }
 }

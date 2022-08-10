@@ -66,7 +66,7 @@ public class SlsLogProjectProperties implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         if (this.logStore == null) {
-            this.logStore = BaseEnvironment.serverName;
+            this.logStore = BaseEnvironment.serverName();
         }
         checkProjectPropertiesValue();
     }
