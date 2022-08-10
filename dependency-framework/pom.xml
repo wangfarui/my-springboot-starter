@@ -45,6 +45,11 @@
                 <artifactId>dao-context</artifactId>
                 <version>${base.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.wfr.springboot</groupId>
+                <artifactId>bean-mapper</artifactId>
+                <version>${base.version}</version>
+            </dependency>
 
             <!-- aliyun-service -->
             <dependency>

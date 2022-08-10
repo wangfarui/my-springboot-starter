@@ -33,5 +33,9 @@
             <groupId>com.wfr.springboot</groupId>
             <artifactId>dao-context</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wfr.springboot</groupId>
+            <artifactId>bean-mapper</artifactId>
+        </dependency>
     </dependencies>
 </project>
