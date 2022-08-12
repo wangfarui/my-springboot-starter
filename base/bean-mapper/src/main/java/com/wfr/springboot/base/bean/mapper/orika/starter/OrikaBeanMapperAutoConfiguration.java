@@ -1,6 +1,7 @@
 package com.wfr.springboot.base.bean.mapper.orika.starter;
 
 import com.wfr.springboot.base.bean.mapper.BeanMapper;
+import com.wfr.springboot.base.bean.mapper.BeanMapperServiceOrdered;
 import com.wfr.springboot.base.bean.mapper.orika.converter.AbstractCustomConverter;
 import ma.glasnost.orika.Converter;
 import ma.glasnost.orika.MapperFacade;
@@ -16,7 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 
 /**
- * {@link BeanMapper} 基于 orika 配置类
+ * {@link BeanMapper} 基于 orika 自动装配
  *
  * @author wangfarui
  * @since 2022/8/3
@@ -28,7 +29,7 @@ public class OrikaBeanMapperAutoConfiguration implements Ordered {
     /**
      * {@link Converter} Bean的注册尽量在 {@link OrikaBeanMapperAutoConfiguration} 之前
      */
-    public static final int ORDER_VALUE = BeanMapper.BeanMapperImplOrdered.ORIKA.getOrder();
+    public static final int ORDER_VALUE = BeanMapperServiceOrdered.ORIKA.getOrder();
 
     @Bean
     @ConditionalOnMissingBean
@@ -42,9 +43,7 @@ public class OrikaBeanMapperAutoConfiguration implements Ordered {
     @Primary
     @Bean("defaultMapperFacade")
     public MapperFacade mapperFacade(MapperFactory mapperFactory) {
-        MapperFacade mapperFacade = mapperFactory.getMapperFacade();
-        BeanMapper.MAPPER_FACADE = mapperFacade;
-        return mapperFacade;
+        return mapperFactory.getMapperFacade();
     }
 
     @Override

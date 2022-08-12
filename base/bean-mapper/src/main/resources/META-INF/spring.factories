@@ -1,2 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.wfr.springboot.base.bean.mapper.orika.starter.OrikaBeanMapperAutoConfiguration
+  com.wfr.springboot.base.bean.mapper.orika.starter.OrikaBeanMapperAutoConfiguration,\
+  com.wfr.springboot.base.bean.mapper.hutool.stater.HuToolBeanMapperAutoConfiguration,\
+  com.wfr.springboot.base.bean.mapper.spring.stater.SpringBeanMapperAutoConfiguration,\
+  com.wfr.springboot.base.bean.mapper.BeanMapperAutoConfiguration
