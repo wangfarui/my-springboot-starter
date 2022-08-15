@@ -13,6 +13,6 @@ public class SpringBeanMapperService extends AbstractBeanMapperService {
 
     @Override
     public <S, D> void copy(S source, D destination) {
-
+        BeanUtils.copyProperties(source, destination);
     }
 }

@@ -8,5 +8,5 @@ import ma.glasnost.orika.CustomConverter;
  * @author wangfarui
  * @since 2022/8/10
  */
-public abstract class AbstractCustomConverter<S, D> extends CustomConverter<S, D> {
+public abstract class AbstractCustomConverter<S, D> extends CustomConverter<S, D> implements BaseConverter {
 }

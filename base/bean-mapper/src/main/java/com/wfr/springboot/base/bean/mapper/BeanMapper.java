@@ -110,6 +110,8 @@ public abstract class BeanMapper {
      * @param beanMapperService BeanMapper 服务
      */
     public static void setBeanMapperService(BeanMapperService beanMapperService) {
-        BEAN_MAPPER_SERVICE = beanMapperService;
+        if (BEAN_MAPPER_SERVICE == null) {
+            BEAN_MAPPER_SERVICE = beanMapperService;
+        }
     }
 }

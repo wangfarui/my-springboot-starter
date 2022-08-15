@@ -13,6 +13,7 @@ public class HuToolBeanMapperService extends AbstractBeanMapperService {
 
     @Override
     public <S, D> void copy(S source, D destination) {
-
+        BeanUtil.copyProperties(source, destination);
     }
+
 }

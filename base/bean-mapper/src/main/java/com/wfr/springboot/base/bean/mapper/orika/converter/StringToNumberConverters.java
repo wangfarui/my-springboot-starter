@@ -20,7 +20,7 @@ import java.math.BigInteger;
  * @since 2022/8/3
  */
 @Configuration(proxyBeanMethods = false)
-public class StringToNumberConverters implements Ordered {
+public class StringToNumberConverters implements Ordered, BaseConverter {
 
     @Override
     public int getOrder() {

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * 通用 java bean 映射服务
+ * java bean 映射抽象服务
  *
  * @author wangfarui
  * @since 2022/8/11
