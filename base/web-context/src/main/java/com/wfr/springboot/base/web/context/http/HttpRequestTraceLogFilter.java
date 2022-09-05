@@ -1,11 +1,13 @@
 package com.wfr.springboot.base.web.context.http;
 
-import com.wfr.springboot.base.log.context.*;
+import com.wfr.springboot.base.log.context.LogData;
+import com.wfr.springboot.base.log.context.LogLever;
+import com.wfr.springboot.base.log.context.LogService;
+import com.wfr.springboot.base.log.context.Logger;
 import com.wfr.springboot.base.web.context.properties.WebRequestLogProperties;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -25,8 +27,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static com.wfr.springboot.base.web.context.starter.RequestLogServiceAutoConfiguration.WEB_REQUEST_LOG_SERVICE_BEAN_NAME;
 
 /**
  * http请求日志过滤器
