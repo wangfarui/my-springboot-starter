@@ -37,5 +37,9 @@
             <groupId>com.wfr.springboot</groupId>
             <artifactId>bean-mapper</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wfr.springboot</groupId>
+            <artifactId>json-mapper</artifactId>
+        </dependency>
     </dependencies>
 </project>

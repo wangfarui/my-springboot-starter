@@ -50,6 +50,11 @@
                 <artifactId>bean-mapper</artifactId>
                 <version>${base.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.wfr.springboot</groupId>
+                <artifactId>json-mapper</artifactId>
+                <version>${base.version}</version>
+            </dependency>
 
             <!-- aliyun-service -->
             <dependency>
