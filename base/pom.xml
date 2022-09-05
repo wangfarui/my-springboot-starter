@@ -21,6 +21,7 @@
         <module>context</module>
         <module>dao-context</module>
         <module>bean-mapper</module>
+        <module>json-mapper</module>
     </modules>
 
 </project>
