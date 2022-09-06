@@ -1,9 +1,11 @@
 package com.wfr.springboot.base.web.context.interceptor;
 
+import com.wfr.base.framework.common.ApiCode;
 import com.wfr.base.framework.common.BaseResponse;
 import com.wfr.base.framework.common.CommonApiCode;
 import com.wfr.springboot.base.json.mapper.JsonMapper;
 import com.wfr.springboot.base.log.context.LogContext;
+import org.springframework.boot.context.properties.bind.validation.BindValidationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
@@ -35,9 +37,23 @@ public class ExceptionHandlerInterceptor implements HandlerInterceptor {
 
         BaseResponse<Object> baseResponse = new BaseResponse<>();
         baseResponse.setCode(serverError.getCode());
-        baseResponse.setMessage(ex.getMessage());
         baseResponse.setTraceId(LogContext.getTraceId());
+        if (supportThrowException(ex)) {
+            baseResponse.setMessage(ex.getMessage());
+        } else {
+            baseResponse.setMessage(serverError.getMessage());
+        }
 
         response.getWriter().write(JsonMapper.toJson(baseResponse));
+    }
+
+    private boolean supportThrowException(Exception e) {
+        if (e instanceof ApiCode) {
+            return true;
+        }
+        if (e instanceof BindValidationException) {
+            return true;
+        }
+        return false;
     }
 }
