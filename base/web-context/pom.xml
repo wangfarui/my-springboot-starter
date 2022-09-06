@@ -20,17 +20,15 @@
             <groupId>com.wfr.springboot</groupId>
             <artifactId>log-context</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wfr.springboot</groupId>
+            <artifactId>json-mapper</artifactId>
+        </dependency>
 
         <!-- apache commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-        </dependency>
-
-        <!-- jackson -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
         </dependency>
 
         <dependency>
