@@ -1,6 +1,7 @@
 package com.wfr.springboot.base.web.context.advice;
 
 import com.wfr.base.framework.common.BaseResponse;
+import com.wfr.springboot.base.log.context.LogContext;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
@@ -35,6 +36,8 @@ public class BaseResponseWrapperAdvice implements ResponseBodyAdvice<Object> {
                                   @NonNull MediaType selectedContentType,
                                   @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
-        return BaseResponse.success(body);
+        BaseResponse<?> baseResponse = BaseResponse.success(body);
+        baseResponse.setTraceId(LogContext.getTraceId());
+        return baseResponse;
     }
 }

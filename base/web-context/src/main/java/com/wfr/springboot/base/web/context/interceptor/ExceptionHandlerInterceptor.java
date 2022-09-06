@@ -3,6 +3,7 @@ package com.wfr.springboot.base.web.context.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wfr.base.framework.common.BaseResponse;
 import com.wfr.base.framework.common.CommonApiCode;
+import com.wfr.springboot.base.log.context.LogContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
@@ -39,6 +40,7 @@ public class ExceptionHandlerInterceptor implements HandlerInterceptor {
         BaseResponse<Object> baseResponse = new BaseResponse<>();
         baseResponse.setCode(serverError.getCode());
         baseResponse.setMessage(ex.getMessage());
+        baseResponse.setTraceId(LogContext.getTraceId());
         response.getWriter().write(OBJECT_MAPPER.writeValueAsString(baseResponse));
     }
 }
