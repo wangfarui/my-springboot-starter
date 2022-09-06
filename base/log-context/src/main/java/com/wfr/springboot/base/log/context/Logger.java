@@ -48,20 +48,40 @@ public abstract class Logger {
         return logService;
     }
 
+    public static LogData trace() {
+        return new LogData(LogLever.TRACE);
+    }
+
     public static <T extends LogData> T trace(Class<T> clazz) {
         return generateLogDataInstance(clazz, LogLever.TRACE);
+    }
+
+    public static LogData debug() {
+        return new LogData(LogLever.DEBUG);
     }
 
     public static <T extends LogData> T debug(Class<T> clazz) {
         return generateLogDataInstance(clazz, LogLever.DEBUG);
     }
 
+    public static LogData info() {
+        return new LogData(LogLever.INFO);
+    }
+
     public static <T extends LogData> T info(Class<T> clazz) {
         return generateLogDataInstance(clazz, LogLever.INFO);
     }
 
+    public static LogData warn() {
+        return new LogData(LogLever.WARN);
+    }
+
     public static <T extends LogData> T warn(Class<T> clazz) {
         return generateLogDataInstance(clazz, LogLever.WARN);
+    }
+
+    public static LogData error() {
+        return new LogData(LogLever.ERROR);
     }
 
     public static <T extends LogData> T error(Class<T> clazz) {
