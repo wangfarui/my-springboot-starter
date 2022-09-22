@@ -18,6 +18,10 @@
             <artifactId>environment</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.wfr.springboot</groupId>
+            <artifactId>json-mapper</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>

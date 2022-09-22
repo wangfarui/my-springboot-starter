@@ -12,11 +12,6 @@
     <artifactId>json-mapper</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.wfr.springboot</groupId>
-            <artifactId>log-context</artifactId>
-        </dependency>
-
         <!-- jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

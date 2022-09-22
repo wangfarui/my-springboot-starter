@@ -8,6 +8,7 @@ import com.aliyun.openservices.log.common.LogItem;
 import com.wfr.springboot.aliyun.service.sls.log.SlsLogData;
 import com.wfr.springboot.aliyun.service.sls.log.properties.SlsLogProducerProperties;
 import com.wfr.springboot.aliyun.service.sls.log.properties.SlsLogProjectProperties;
+import com.wfr.springboot.base.log.context.LogContent;
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.interceptor.LogInterceptor;
 import com.wfr.springboot.base.log.context.properties.LogContextProperties;
@@ -93,8 +94,8 @@ public class SlsLogService extends AbstractLogService implements InitializingBea
     private LogItem packaging(LogData logData) {
         LogItem logItem = new LogItem();
 
-        for (Map.Entry<String, Object> entry : logData.getLogContents().entrySet()) {
-            logItem.PushBack(entry.getKey(), entry.getValue().toString());
+        for (LogContent.LogEntry entry : logData.getLogContents().logEntryList()) {
+            logItem.PushBack(entry.getKey(), entry.getValueStr());
         }
 
         return logItem;

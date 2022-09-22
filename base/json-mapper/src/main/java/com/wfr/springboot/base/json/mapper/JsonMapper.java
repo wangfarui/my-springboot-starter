@@ -2,7 +2,8 @@ package com.wfr.springboot.base.json.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wfr.springboot.base.log.context.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON数据对象Mapper
@@ -11,6 +12,8 @@ import com.wfr.springboot.base.log.context.Logger;
  * @since 2022/9/5
  */
 public abstract class JsonMapper {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonMapper.class);
 
     private static final ObjectMapper OBJECT_MAPPER;
 
@@ -37,7 +40,7 @@ public abstract class JsonMapper {
         try {
             return OBJECT_MAPPER.writeValueAsString(o);
         } catch (JsonProcessingException e) {
-            Logger.error().addMessage("[JsonMapper][toJson]转换json数据异常").addException(e).push();
+            LOGGER.warn("[JsonMapper][toJson]转换json数据异常: {}", e.toString());
         }
         return o.toString();
     }
@@ -54,7 +57,7 @@ public abstract class JsonMapper {
         try {
             return OBJECT_MAPPER.readValue(json, objectType);
         } catch (JsonProcessingException e) {
-            Logger.error().addMessage("[JsonMapper][toObject]转换json数据异常").addException(e).push();
+            LOGGER.warn("[JsonMapper][toObject]转换json数据异常: {}", e.toString());
         }
         return null;
     }

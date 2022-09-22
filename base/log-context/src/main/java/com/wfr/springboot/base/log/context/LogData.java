@@ -1,9 +1,8 @@
 package com.wfr.springboot.base.log.context;
 
+import com.wfr.base.framework.common.utils.CollectionUtils;
 import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,7 +21,7 @@ public class LogData {
     /**
      * 默认16个key的容量
      */
-    private Map<String, Object> logContents = new HashMap<>();
+    private final LogContent logContents = new LogContent();
 
     /**
      * 日志开始时间 (毫秒时间戳)
@@ -130,8 +129,8 @@ public class LogData {
      *
      * @return LogContents
      */
-    public Map<String, Object> getLogContents() {
-        return logContents;
+    public LogContent getLogContents() {
+        return this.logContents;
     }
 
     /**
@@ -172,7 +171,7 @@ public class LogData {
      * @return LogData
      */
     public LogData add(String key, Object content) {
-        logContents.put(key, content);
+        this.logContents.put(key, content);
         return this;
     }
 
@@ -183,8 +182,8 @@ public class LogData {
      */
     public String formatLogContents() {
         StringBuilder sb = new StringBuilder("{");
-        for (Map.Entry<String, Object> entry : this.logContents.entrySet()) {
-            sb.append(entry.getKey()).append(": ").append(entry.getValue()).append(", ");
+        for (LogContent.LogEntry entry : this.logContents.logEntryList()) {
+            sb.append(entry.getKey()).append(": ").append(entry.getValueStr()).append(", ");
         }
         if (sb.length() > 1) {
             sb.delete(sb.length() - 2, sb.length()).append("}");
