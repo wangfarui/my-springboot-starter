@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.wfr.springboot.base.dao.context.starter.DaoSqlLogAutoConfiguration
+  com.wfr.springboot.base.dao.context.starter.DaoSqlLogAutoConfiguration,\
+  com.wfr.springboot.base.dao.context.starter.MyBatisPlusAutoConfiguration
