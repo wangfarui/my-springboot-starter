@@ -1,5 +1,6 @@
 package com.wfr.springboot.base.web.context.http;
 
+import com.wfr.base.framework.common.utils.ExceptionUtils;
 import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogLever;
 import com.wfr.springboot.base.log.context.LogService;
@@ -101,7 +102,7 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
             filterChain.doFilter(requestWrapper, responseWrapper);
         } catch (Throwable e) {
             logData.logLever(LogLever.ERROR);
-            logData.addException(e);
+            logData.addException(ExceptionUtils.exceptionStackTraceText(e));
         } finally {
             try {
                 String queryString = requestWrapper.getQueryString();

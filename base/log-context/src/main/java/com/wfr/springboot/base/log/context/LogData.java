@@ -164,7 +164,7 @@ public class LogData {
      * @param throwable 异常信息调用栈
      * @return LogData
      */
-    public LogData addException(Throwable throwable) {
+    public LogData addException(Object throwable) {
         // TODO 异常信息需要打印堆栈链
         return add(LogConstants.LOG_EXCEPTION, throwable);
     }
