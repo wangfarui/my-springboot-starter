@@ -16,7 +16,7 @@ import org.springframework.core.Ordered;
 import java.util.List;
 
 /**
- * 日志拦截器自动装配
+ * 日志服务自动装配
  *
  * @author wangfarui
  * @see LogInterceptor

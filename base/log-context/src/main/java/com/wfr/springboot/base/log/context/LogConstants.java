@@ -14,6 +14,12 @@ public abstract class LogConstants {
     public static final String LOG_TRACE_ID = "log_trace_id";
 
     /**
+     * 日志链路栈 key
+     * <p>表示日志的执行顺序</p>
+     */
+    public static final String LOG_TRACE_STACK = "log_trace_stack";
+
+    /**
      * 日志服务级别 key
      */
     public static final String LOG_LEVEL = "log_level";
@@ -32,6 +38,5 @@ public abstract class LogConstants {
      * 日志服务消息 key
      */
     public static final String LOG_MESSAGE = "log_message";
-
 
 }

@@ -1,5 +1,6 @@
 package com.wfr.springboot.base.log.context.starter;
 
+import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.interceptor.BasicInformationFillerLogInterceptor;
 import com.wfr.springboot.base.log.context.properties.LogContextProperties;
 import org.slf4j.Logger;
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * 日志服务上下文自动装配
+ * 日志上下文自动装配
  *
  * @author wangfarui
  * @since 2022/7/12
@@ -20,5 +21,8 @@ import org.springframework.context.annotation.Import;
 @Import(BasicInformationFillerLogInterceptor.class)
 public class LogContextAutoConfiguration {
 
-
+    static {
+        // 初始化时加载LogData
+        LogData logData = LogData.emptyLogData();
+    }
 }

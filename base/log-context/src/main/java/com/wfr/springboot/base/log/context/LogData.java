@@ -26,7 +26,7 @@ public class LogData {
     /**
      * 日志开始时间 (毫秒时间戳)
      */
-    private final long startTime;
+    private final long startTime = System.currentTimeMillis();
 
     /**
      * 空日志实体
@@ -37,9 +37,15 @@ public class LogData {
         this(LogLever.INFO);
     }
 
+    /**
+     * 日志数据 “最终” 构造器
+     * <p>保证其子类调用该构造器</p>
+     *
+     * @param logLever 日志级别
+     */
     public LogData(LogLever logLever) {
         this.logLever = logLever;
-        this.startTime = System.currentTimeMillis();
+        initFillLogData();
     }
 
     public static LogData trace() {
@@ -196,5 +202,9 @@ public class LogData {
      */
     public void push() {
         Logger.push(this);
+    }
+
+    private void initFillLogData() {
+        this.logContents.put(LogConstants.LOG_TRACE_STACK, LogContext.getTraceStack());
     }
 }
