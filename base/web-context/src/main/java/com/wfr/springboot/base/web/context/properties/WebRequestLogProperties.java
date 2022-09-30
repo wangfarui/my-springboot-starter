@@ -18,7 +18,7 @@ public class WebRequestLogProperties {
     /**
      * web请求链路日志的日志级别
      */
-    private LogLever lever = LogLever.TRACE;
+    private LogLever lever = LogLever.INFO;
 
     /**
      * 拦截器的过滤属性配置

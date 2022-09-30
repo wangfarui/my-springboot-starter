@@ -155,6 +155,6 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
             }
             return true;
         }
-        return this.excludePatternSet.isEmpty() || this.excludePatternSet.contains(requestURI);
+        return !this.excludePatternSet.isEmpty() && this.excludePatternSet.contains(requestURI);
     }
 }
