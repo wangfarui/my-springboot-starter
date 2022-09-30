@@ -19,7 +19,7 @@ public class DaoSqlLogProperties {
     /**
      * 正常sql日志级别
      */
-    private LogLever normalSqlLogLevel = LogLever.DEBUG;
+    private LogLever normalSqlLogLevel = LogLever.INFO;
 
     /**
      * 慢sql日志级别
