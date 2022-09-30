@@ -205,6 +205,7 @@ public class LogData {
     }
 
     private void initFillLogData() {
+        this.logContents.put(LogConstants.LOG_TRACE_ID, LogContext.getTraceId());
         this.logContents.put(LogConstants.LOG_TRACE_STACK, LogContext.getTraceStack());
     }
 }
