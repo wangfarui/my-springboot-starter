@@ -1,8 +1,8 @@
 package com.wfr.springboot.base.log.context;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
@@ -81,7 +81,7 @@ public abstract class LogContext {
         if (map == null) {
             synchronized (LOG_TRACE_CONTEXT) {
                 if ((map = LOG_TRACE_CONTEXT.get()) == null) {
-                    map = new ConcurrentHashMap<>(4);
+                    map = new HashMap<>(4);
                     LOG_TRACE_CONTEXT.set(map);
                 }
             }

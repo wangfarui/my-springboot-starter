@@ -1,7 +1,9 @@
 package com.wfr.springboot.base.web.context.advice;
 
 import com.wfr.base.framework.common.BaseResponse;
+import com.wfr.springboot.base.json.mapper.JsonMapper;
 import com.wfr.springboot.base.log.context.LogContext;
+import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
@@ -27,17 +29,42 @@ public class BaseResponseWrapperAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(@NonNull MethodParameter returnType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
-        return !returnType.getParameterType().isAssignableFrom(WRAPPER_CLASS);
+        // TODO 暂时支持对所有返回类型做包装处理, 后期改为集合遍历判断
+        return true;
     }
 
     @Nullable
     @Override
+    @SuppressWarnings("unchecked")
     public Object beforeBodyWrite(@Nullable Object body, @NonNull MethodParameter returnType,
                                   @NonNull MediaType selectedContentType,
                                   @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
-        BaseResponse<?> baseResponse = BaseResponse.success(body);
-        baseResponse.setTraceId(LogContext.getTraceId());
+        BaseResponse<Object> baseResponse;
+        if (returnType.getParameterType().isAssignableFrom(WRAPPER_CLASS)) {
+            baseResponse = (BaseResponse<Object>) body;
+            if (baseResponse == null) {
+                baseResponse = BaseResponse.success();
+            }
+            if (baseResponse.getTraceId() == null) {
+                baseResponse.setTraceId(LogContext.getTraceId());
+            }
+        } else {
+            if (isBasicError(returnType.getDeclaringClass())) {
+                baseResponse = BaseResponse.fail();
+                baseResponse.setData(body);
+            } else {
+                baseResponse = BaseResponse.success(body);
+            }
+            baseResponse.setTraceId(LogContext.getTraceId());
+        }
+        if (selectedContentType.isCompatibleWith(MediaType.TEXT_PLAIN)) {
+            return JsonMapper.toJson(baseResponse);
+        }
         return baseResponse;
+    }
+
+    private boolean isBasicError(Class<?> declaringClass) {
+        return declaringClass == BasicErrorController.class;
     }
 }
