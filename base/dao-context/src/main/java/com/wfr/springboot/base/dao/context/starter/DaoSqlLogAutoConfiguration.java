@@ -1,6 +1,7 @@
 package com.wfr.springboot.base.dao.context.starter;
 
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
+import com.mysql.cj.jdbc.ClientPreparedStatement;
 import com.wfr.springboot.base.dao.context.mybatis.MyBatisSqlInterceptor;
 import com.wfr.springboot.base.dao.context.properties.DaoSqlLogProperties;
 import com.wfr.springboot.base.log.context.service.AbstractLogService;
@@ -33,7 +34,7 @@ public class DaoSqlLogAutoConfiguration {
 
 
     /**
-     * mybatis sql 日志自动装配
+     * mybatis 基于 mysql 的sql日志自动装配
      * <br/><b>主要是为了注入 {@link Interceptor} 拦截器</b>
      * <p>
      * <br/>{@link SqlSessionFactory} 从 {@link MybatisAutoConfiguration} 和 {@link MybatisPlusAutoConfiguration} 选其一.
@@ -44,7 +45,7 @@ public class DaoSqlLogAutoConfiguration {
      * <p>reference from {@link com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration}</p>
      */
     @Configuration(proxyBeanMethods = false)
-    @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
+    @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class, ClientPreparedStatement.class})
     @AutoConfigureBefore(name = {
             "org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration",
             "com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration"})
