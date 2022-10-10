@@ -52,12 +52,20 @@ public abstract class Logger {
         return new LogData(LogLever.TRACE);
     }
 
+    public static void trace(String message) {
+        new LogData(LogLever.TRACE).addMessage(message).push();
+    }
+
     public static <T extends LogData> T trace(Class<T> clazz) {
         return generateLogDataInstance(clazz, LogLever.TRACE);
     }
 
     public static LogData debug() {
         return new LogData(LogLever.DEBUG);
+    }
+
+    public static void debug(String message) {
+        new LogData(LogLever.DEBUG).addMessage(message).push();
     }
 
     public static <T extends LogData> T debug(Class<T> clazz) {
@@ -68,6 +76,10 @@ public abstract class Logger {
         return new LogData(LogLever.INFO);
     }
 
+    public static void info(String message) {
+        new LogData(LogLever.INFO).addMessage(message).push();
+    }
+
     public static <T extends LogData> T info(Class<T> clazz) {
         return generateLogDataInstance(clazz, LogLever.INFO);
     }
@@ -76,12 +88,20 @@ public abstract class Logger {
         return new LogData(LogLever.WARN);
     }
 
+    public static void warn(String message) {
+        new LogData(LogLever.WARN).addMessage(message).push();
+    }
+
     public static <T extends LogData> T warn(Class<T> clazz) {
         return generateLogDataInstance(clazz, LogLever.WARN);
     }
 
     public static LogData error() {
         return new LogData(LogLever.ERROR);
+    }
+
+    public static void error(String message) {
+        new LogData(LogLever.ERROR).addMessage(message).push();
     }
 
     public static <T extends LogData> T error(Class<T> clazz) {
