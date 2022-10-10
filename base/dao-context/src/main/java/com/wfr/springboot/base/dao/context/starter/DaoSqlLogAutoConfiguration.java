@@ -2,22 +2,30 @@ package com.wfr.springboot.base.dao.context.starter;
 
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.mysql.cj.jdbc.ClientPreparedStatement;
+import com.mysql.cj.jdbc.MysqlDataSource;
+import com.wfr.springboot.base.dao.context.mybatis.HikariDatasourceMyBatisSqlInterceptor;
 import com.wfr.springboot.base.dao.context.mybatis.MyBatisSqlInterceptor;
+import com.wfr.springboot.base.dao.context.mybatis.MysqlDatasourceMyBatisSqlInterceptor;
 import com.wfr.springboot.base.dao.context.properties.DaoSqlLogProperties;
 import com.wfr.springboot.base.log.context.service.AbstractLogService;
 import com.wfr.springboot.base.log.context.starter.LogServiceAutoConfiguration;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.util.ClassUtils;
 
 /**
  * 数据访问层 SQL 日志自动装配
@@ -34,7 +42,7 @@ public class DaoSqlLogAutoConfiguration {
 
 
     /**
-     * mybatis 基于 mysql 的sql日志自动装配
+     * 基于 mybatis 的sql日志自动装配
      * <br/><b>主要是为了注入 {@link Interceptor} 拦截器</b>
      * <p>
      * <br/>{@link SqlSessionFactory} 从 {@link MybatisAutoConfiguration} 和 {@link MybatisPlusAutoConfiguration} 选其一.
@@ -45,12 +53,41 @@ public class DaoSqlLogAutoConfiguration {
      * <p>reference from {@link com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration}</p>
      */
     @Configuration(proxyBeanMethods = false)
-    @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class, ClientPreparedStatement.class})
+    @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
     @AutoConfigureBefore(name = {
             "org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration",
             "com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration"})
-    @Import({MyBatisSqlInterceptor.class})
     static class MyBatisSqlLogAutoConfiguration {
 
+        private static final String DATA_SOURCE_TYPE_NAME = "com.zaxxer.hikari.HikariDataSource";
+
+        @Bean
+        @ConditionalOnMissingBean(MyBatisSqlInterceptor.class)
+        @ConditionalOnClass({ClientPreparedStatement.class})
+        @ConditionalOnBean(DataSourceProperties.class)
+        public MyBatisSqlInterceptor myBatisSqlInterceptor(DataSourceProperties dataSourceProperties,
+                                                           ObjectProvider<DaoSqlLogProperties> sqlLogProperties) {
+            Class<?> type = dataSourceProperties.getType();
+            DaoSqlLogProperties daoSqlLogProperties = sqlLogProperties.getIfAvailable();
+
+            // DataSourceProperties.type为空时, 拿Hikari作为默认数据源
+            if (type == null) {
+                try {
+                    type = ClassUtils.forName(DATA_SOURCE_TYPE_NAME, null);
+                } catch (ClassNotFoundException e) {
+                    // ignore
+                    return null;
+                }
+            }
+
+            if (MysqlDataSource.class.isAssignableFrom(type)) {
+                return new MysqlDatasourceMyBatisSqlInterceptor(daoSqlLogProperties);
+            } else if (HikariDataSource.class.isAssignableFrom(type)) {
+                return new HikariDatasourceMyBatisSqlInterceptor(daoSqlLogProperties);
+            }
+
+            // 未知数据源暂时返回NullBean, 代表不采用MyBatisSqlInterceptor打印sql日志
+            return null;
+        }
     }
 }

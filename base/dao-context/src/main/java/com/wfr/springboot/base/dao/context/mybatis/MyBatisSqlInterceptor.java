@@ -1,6 +1,6 @@
 package com.wfr.springboot.base.dao.context.mybatis;
 
-import com.mysql.cj.jdbc.ClientPreparedStatement;
+import com.wfr.base.framework.common.utils.StringUtils;
 import com.wfr.springboot.base.dao.context.SqlMethod;
 import com.wfr.springboot.base.dao.context.log.SqlLogKeyConstants;
 import com.wfr.springboot.base.dao.context.properties.DaoSqlLogProperties;
@@ -8,14 +8,10 @@ import com.wfr.springboot.base.log.context.LogData;
 import com.wfr.springboot.base.log.context.LogLever;
 import com.wfr.springboot.base.log.context.LogService;
 import com.wfr.springboot.base.log.context.Logger;
-import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
-import org.apache.ibatis.plugin.Signature;
-import org.apache.ibatis.session.ResultHandler;
 
-import java.sql.Statement;
+import java.sql.SQLException;
 
 /**
  * MyBatis 的SQL拦截器
@@ -24,45 +20,49 @@ import java.sql.Statement;
  * @author wangfarui
  * @since 2022/7/26
  */
-@Intercepts({
-        @Signature(type = StatementHandler.class, method = "batch", args = {Statement.class}),
-        @Signature(type = StatementHandler.class, method = "update", args = {Statement.class}),
-        @Signature(type = StatementHandler.class, method = "query", args = {Statement.class, ResultHandler.class})
-})
-public class MyBatisSqlInterceptor implements Interceptor {
+public abstract class MyBatisSqlInterceptor implements Interceptor {
 
     /**
      * 正常sql日志级别
      */
-    private final LogLever normalSqlLogLevel;
+    protected final LogLever normalSqlLogLevel;
 
     /**
      * 慢sql日志级别
      */
-    private final LogLever slowSqlLogLevel;
+    protected final LogLever slowSqlLogLevel;
 
     /**
      * 异常sql日志级别
      */
-    private final LogLever errorSqlLogLevel;
+    protected final LogLever errorSqlLogLevel;
 
     /**
      * 慢sql时间
      */
-    private final long slowSqlTime;
+    protected final long slowSqlTime;
 
     /**
      * 主日志服务
      */
-    private final LogService logService;
+    protected final LogService logService;
 
     public MyBatisSqlInterceptor(DaoSqlLogProperties sqlLogProperties) {
-        this.normalSqlLogLevel = sqlLogProperties.getNormalSqlLogLevel();
-        this.slowSqlLogLevel = sqlLogProperties.getSlowSqlLogLevel();
-        this.errorSqlLogLevel = sqlLogProperties.getErrorSqlLogLevel();
-        this.slowSqlTime = sqlLogProperties.getSlowSqlTime().toMillis();
+        DaoSqlLogProperties properties = sqlLogProperties != null ? sqlLogProperties : new DaoSqlLogProperties();
+        this.normalSqlLogLevel = properties.getNormalSqlLogLevel();
+        this.slowSqlLogLevel = properties.getSlowSqlLogLevel();
+        this.errorSqlLogLevel = properties.getErrorSqlLogLevel();
+        this.slowSqlTime = properties.getSlowSqlTime().toMillis();
         this.logService = Logger.defaultLogService();
     }
+
+    /**
+     * 获取原生sql语句
+     *
+     * @param statement SQL Statement
+     * @return sql
+     */
+    protected abstract String getNativeSql(Object statement) throws SQLException;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -72,13 +72,14 @@ public class MyBatisSqlInterceptor implements Interceptor {
         boolean isException = false;
         try {
             Object statement = args[0];
-            if (statement instanceof ClientPreparedStatement) {
-                ClientPreparedStatement clientPreparedStatement = (ClientPreparedStatement) statement;
-                String sql = clientPreparedStatement.asSql().replaceAll("[\\s]+", " ").trim();
-                logData = LogData.createLogData(this.normalSqlLogLevel)
-                        .add(SqlLogKeyConstants.SQL_METHOD, getSqlMethod(sql))
-                        .add(SqlLogKeyConstants.SQL_CONTENT, sql);
+            String nativeSql = getNativeSql(statement);
+            if (StringUtils.isBlank(nativeSql)) {
+                return invocation.proceed();
             }
+            String sql = nativeSql.replaceAll("[\\s]+", " ").trim();
+            logData = LogData.createLogData(this.normalSqlLogLevel)
+                    .add(SqlLogKeyConstants.SQL_METHOD, getSqlMethod(sql))
+                    .add(SqlLogKeyConstants.SQL_CONTENT, sql);
             return invocation.proceed();
         } catch (Throwable e) {
             if (!logData.isEmptyLogData()) {
