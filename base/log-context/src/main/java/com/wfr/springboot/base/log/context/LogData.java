@@ -1,6 +1,7 @@
 package com.wfr.springboot.base.log.context;
 
 import com.wfr.base.framework.common.utils.CollectionUtils;
+import com.wfr.base.framework.common.utils.ExceptionUtils;
 import org.springframework.util.Assert;
 
 import java.util.Map;
@@ -164,9 +165,8 @@ public class LogData {
      * @param throwable 异常信息调用栈
      * @return LogData
      */
-    public LogData addException(Object throwable) {
-        // TODO 异常信息需要打印堆栈链
-        return add(LogConstants.LOG_EXCEPTION, throwable);
+    public LogData addException(Throwable throwable) {
+        return add(LogConstants.LOG_EXCEPTION, ExceptionUtils.exceptionStackTraceText(throwable));
     }
 
     /**
