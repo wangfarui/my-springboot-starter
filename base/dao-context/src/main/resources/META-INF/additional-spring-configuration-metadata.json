@@ -6,6 +6,20 @@
       "sourceType": "com.wfr.springboot.base.dao.context.starter.DaoSqlLogAutoConfiguration",
       "defaultValue": true,
       "description": "开启数据访问层的sql日志打印."
+    },
+    {
+      "name": "dao.sql.log.mybatis-enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.wfr.springboot.base.dao.context.starter.DaoSqlLogAutoConfiguration$MyBatisSqlLogAutoConfiguration",
+      "defaultValue": true,
+      "description": "开启数据访问层基于mybatis扩展的sql日志打印."
+    },
+    {
+      "name": "dao.sql.log.datasource-enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.wfr.springboot.base.dao.context.starter.DaoSqlLogAutoConfiguration$DataSourceSqlLogAutoConfiguration",
+      "defaultValue": true,
+      "description": "开启数据访问层基于datasource扩展的sql日志打印."
     }
   ]
 }

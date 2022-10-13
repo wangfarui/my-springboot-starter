@@ -1,4 +1,4 @@
-package com.wfr.springboot.base.dao.context.mybatis;
+package com.wfr.springboot.base.dao.context.interceptor;
 
 import com.mysql.cj.jdbc.ClientPreparedStatement;
 import com.wfr.springboot.base.dao.context.properties.DaoSqlLogProperties;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * 基于 Mysql 数据源的SQL拦截器
+ * 基于 Hikari 数据源实现 MyBatis SQL拦截器
  *
  * @author wangfarui
  * @since 2022/7/26
@@ -47,13 +47,19 @@ public class HikariDatasourceMyBatisSqlInterceptor extends MyBatisSqlInterceptor
             try {
                 Object o = this.delegate.get(statement);
                 if (o instanceof ClientPreparedStatement) {
-                    ClientPreparedStatement clientPreparedStatement = (ClientPreparedStatement) o;
-                    return clientPreparedStatement.asSql();
+                    return getSqlByClientPreparedStatement(o);
                 }
             } catch (IllegalAccessException e) {
                 LogData.error().addException(e).addMessage("获取值异常").push();
             }
+        } else if (statement instanceof ClientPreparedStatement) {
+            return getSqlByClientPreparedStatement(statement);
         }
         return null;
+    }
+
+    private String getSqlByClientPreparedStatement(Object statement) throws SQLException {
+        ClientPreparedStatement clientPreparedStatement = (ClientPreparedStatement) statement;
+        return clientPreparedStatement.asSql();
     }
 }

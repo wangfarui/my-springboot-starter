@@ -11,5 +11,22 @@ public enum SqlMethod {
     UPDATE,
     INSERT,
     DELETE,
-    UNKNOWN
+    UNKNOWN;
+
+    public static SqlMethod getSqlMethod(String sql) {
+        if (sql.length() < 6) {
+            return UNKNOWN;
+        }
+        String sqlPrefix = sql.trim().substring(0, 6).toUpperCase();
+        if (sqlPrefix.startsWith("SELECT")) {
+            return SELECT;
+        } else if (sqlPrefix.startsWith("UPDATE")) {
+            return UPDATE;
+        } else if (sqlPrefix.startsWith("INSERT")) {
+            return INSERT;
+        } else if (sqlPrefix.startsWith("DELETE")) {
+            return DELETE;
+        }
+        return UNKNOWN;
+    }
 }

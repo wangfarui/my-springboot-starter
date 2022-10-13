@@ -1,4 +1,4 @@
-package com.wfr.springboot.base.dao.context.mybatis;
+package com.wfr.springboot.base.dao.context.interceptor;
 
 import com.mysql.cj.jdbc.ClientPreparedStatement;
 import com.wfr.springboot.base.dao.context.properties.DaoSqlLogProperties;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * 基于 Mysql 数据源的SQL拦截器
+ * 基于 Mysql 数据源实现 MyBatis SQL拦截器
  *
  * @author wangfarui
  * @since 2022/7/26

@@ -37,6 +37,12 @@ public class DaoSqlLogProperties {
     @DurationUnit(ChronoUnit.MILLIS)
     private Duration slowSqlTime = Duration.ofMillis(1000L);
 
+    /**
+     * 简化sql语句
+     * <p>默认true, 将所有sql语句格式化为一行; false, 原样输出sql语句</p>
+     */
+    private boolean simplifySql = true;
+
     public LogLever getNormalSqlLogLevel() {
         return normalSqlLogLevel;
     }
@@ -67,5 +73,13 @@ public class DaoSqlLogProperties {
 
     public void setSlowSqlTime(Duration slowSqlTime) {
         this.slowSqlTime = slowSqlTime;
+    }
+
+    public boolean isSimplifySql() {
+        return simplifySql;
+    }
+
+    public void setSimplifySql(boolean simplifySql) {
+        this.simplifySql = simplifySql;
     }
 }

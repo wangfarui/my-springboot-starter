@@ -19,6 +19,21 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- mysql 连接池 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- druid 连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- mybatis -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -29,12 +44,6 @@
             <artifactId>mybatis-spring</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <optional>true</optional>
-        </dependency>
-
         <!-- Choose one -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -46,6 +55,8 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <optional>true</optional>
         </dependency>
+
+
     </dependencies>
 
 </project>
