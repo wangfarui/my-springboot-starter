@@ -1,5 +1,7 @@
 package com.wfr.springboot.base.log.context;
 
+import org.springframework.lang.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -57,14 +59,16 @@ public abstract class LogContext {
      * @return 日志链路上下文value
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getLogTraceValue(String key, Supplier<T> supplier) {
+    public static <T> T getLogTraceValue(String key, @Nullable Supplier<T> supplier) {
         Map<String, Object> map = getLogTraceContext();
         Object value;
         if ((value = map.get(key)) == null) {
+            if (supplier == null) return null;
             synchronized (LOG_TRACE_CONTEXT) {
                 if ((value = map.get(key)) == null) {
-                    value = supplier.get();
-                    map.put(key, value);
+                    if ((value = supplier.get()) != null) {
+                        map.put(key, value);
+                    }
                 }
             }
         }

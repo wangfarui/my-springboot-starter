@@ -102,7 +102,7 @@ public class HttpRequestTraceLogFilter extends OncePerRequestFilter implements I
             filterChain.doFilter(requestWrapper, responseWrapper);
         } catch (Throwable e) {
             logData.logLever(LogLever.ERROR);
-            logData.addException(ExceptionUtils.exceptionStackTraceText(e));
+            logData.addException(e);
         } finally {
             try {
                 String queryString = requestWrapper.getQueryString();
