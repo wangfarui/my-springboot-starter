@@ -19,6 +19,7 @@
         <module>dependency-framework</module>
         <module>base</module>
         <module>aliyun-service</module>
+        <module>plugin-service</module>
     </modules>
 
     <properties>
