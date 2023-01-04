@@ -3,19 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>framework-base</artifactId>
+        <artifactId>plugin-service</artifactId>
         <groupId>com.wfr.springboot</groupId>
         <version>1.0.0</version>
-        <relativePath>../dependency-framework/framework-base/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>dingtalk</module>
-    </modules>
+    <artifactId>dingtalk</artifactId>
+    <description>钉钉插件服务</description>
 
-    <artifactId>plugin-service</artifactId>
-    <description>插件服务模块</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.8.0</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
 </project>
