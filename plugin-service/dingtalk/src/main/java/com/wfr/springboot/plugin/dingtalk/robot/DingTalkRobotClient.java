@@ -1,8 +1,11 @@
 package com.wfr.springboot.plugin.dingtalk.robot;
 
+import cn.hutool.http.Method;
+import com.wfr.base.framework.common.utils.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -51,18 +54,17 @@ public class DingTalkRobotClient {
             }
             final String requestUrl = properties.getRequestUrl();
             EXECUTOR_SERVICE.execute(() -> {
-                // TODO 等HTTP工具类
-//                DingTalkSendResponse response = HttpUtils.createRequest()
-//                        .setMethod(Method.POST)
-//                        .setUrl(requestUrl)
-//                        .setBody(request)
-//                        .setCharset(StandardCharsets.UTF_8)
-//                        .executePost(DingTalkSendResponse.class);
-//                if (response == null) {
-//                    log.warn("[DingTalkClient][send]发送钉钉消息异常, request:{}", JSON.toJSONString(request));
-//                } else if (response.getErrcode() != 0) {
-//                    log.warn("[DingTalkClient][send]发送钉钉消息失败, request:{}, response:{}", JSON.toJSONString(request), JSON.toJSONString(response));
-//                }
+                DingTalkRobotSendResponse response = HttpUtils.createRequest()
+                        .setMethod(Method.POST)
+                        .setUrl(requestUrl)
+                        .setBody(request)
+                        .setCharset(StandardCharsets.UTF_8)
+                        .executePost(DingTalkRobotSendResponse.class);
+                if (response == null) {
+                    log.warn("[DingTalkClient][send]发送钉钉消息异常, request:{}", request);
+                } else if (response.getErrcode() != 0) {
+                    log.warn("[DingTalkClient][send]发送钉钉消息失败, request:{}, response:{}", request, response);
+                }
             });
         }
     }

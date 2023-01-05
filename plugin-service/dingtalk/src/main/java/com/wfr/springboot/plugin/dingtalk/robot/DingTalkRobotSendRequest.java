@@ -161,7 +161,7 @@ public class DingTalkRobotSendRequest {
         private String content;
     }
 
-    // TODO 临时toString
+    // TODO 临时toString 等JSON序列化
     @Override
     public String toString() {
         return "DingTalkSendRequest{" +
