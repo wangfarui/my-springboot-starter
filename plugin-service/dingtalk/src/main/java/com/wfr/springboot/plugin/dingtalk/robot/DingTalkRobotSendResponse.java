@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class DingTalkSendResponse {
+public class DingTalkRobotSendResponse {
 
     private long errcode;
 

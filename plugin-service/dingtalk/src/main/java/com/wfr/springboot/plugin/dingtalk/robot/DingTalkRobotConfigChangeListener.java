@@ -34,7 +34,7 @@ public class DingTalkRobotConfigChangeListener {
     }
 
     private void pushToDingTalk(boolean b) {
-        DingTalkSendRequest request = new DingTalkSendRequest();
+        DingTalkRobotSendRequest request = new DingTalkRobotSendRequest();
         request.setDingTalkRobotMsgType(DingTalkRobotMsgType.TEXT);
         request.setTextContent("钉钉告警已" + (b ? "开启" : "关闭"));
         dingTalkRobotClient.send(request, true);

@@ -14,7 +14,7 @@ import java.util.Map;
  * @author wangfarui
  * @since 2022/10/18
  */
-public class DingTalkSendRequest {
+public class DingTalkRobotSendRequest {
 
     /**
      * 用于钉钉入参

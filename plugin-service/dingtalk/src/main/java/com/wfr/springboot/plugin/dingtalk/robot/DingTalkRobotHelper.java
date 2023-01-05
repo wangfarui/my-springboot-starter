@@ -27,18 +27,18 @@ public abstract class DingTalkRobotHelper {
         return DING_TALK_CLIENT;
     }
 
-    public static void send(DingTalkSendRequest request) {
+    public static void send(DingTalkRobotSendRequest request) {
         getDingTalkClient().send(request);
     }
 
     public static void sendMessage(String message) {
-        DingTalkSendRequest request = new DingTalkSendRequest();
+        DingTalkRobotSendRequest request = new DingTalkRobotSendRequest();
         request.setTextContent(message);
         getDingTalkClient().send(request);
     }
 
     public static void sendException(String message, Throwable e) {
-        DingTalkSendRequest request = new DingTalkSendRequest();
+        DingTalkRobotSendRequest request = new DingTalkRobotSendRequest();
         request.setMarkdownTitle("自定义异常");
         request.addMarkdownContent("异常内容", message);
         request.addMarkdownContent("异常信息", ExceptionUtils.exceptionStackTraceText(e));

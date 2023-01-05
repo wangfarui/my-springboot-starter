@@ -34,7 +34,7 @@ public class DingTalkRobotClient {
      *
      * @param request 机器人消息对象
      */
-    public void send(final DingTalkSendRequest request) {
+    public void send(final DingTalkRobotSendRequest request) {
         send(request, CAN_APPLY);
     }
 
@@ -43,7 +43,7 @@ public class DingTalkRobotClient {
      *
      * @param request 机器人消息对象
      */
-    public void send(final DingTalkSendRequest request, boolean canApply) {
+    public void send(final DingTalkRobotSendRequest request, boolean canApply) {
         if (canApply) {
             boolean completed = request.completeRequestParam();
             if (!completed) {
